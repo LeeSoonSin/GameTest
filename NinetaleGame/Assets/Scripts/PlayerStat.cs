@@ -31,6 +31,6 @@ public class PlayerStat : MonoBehaviour
 
     private void Die()
     {
-        
+        Debug.Log("¿∏æ”¡Í±›");
     }
 }
