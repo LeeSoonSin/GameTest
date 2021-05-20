@@ -24,9 +24,11 @@ public class Move : MonoBehaviour
     //Stop Speed
     void Update()
     {
+        
         Attack(); //근접공격
         Jump();
-        if(Input.GetButtonUp("Horizontal"))
+        TransAnimal();
+        if (Input.GetButtonUp("Horizontal"))
         {
             playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.normalized.x * 0.5f, playerRigidbody.velocity.y);
         }
@@ -68,7 +70,7 @@ public class Move : MonoBehaviour
                 }
             }
         }
-    } // 요것은 점프여!
+    } // 요것은 점프낙하 레이여!
     private void MoveDirection()
     {
         //Move Speed
@@ -77,7 +79,7 @@ public class Move : MonoBehaviour
         //최대속도 구현하기. velocity는 그 오브젝트의 속도를 말함.
         if (horizontal < 0)
         {
-            transform.eulerAngles = new Vector3(0, 180, 0);
+            transform.eulerAngles = new Vector3(0, -180, 0);
         }
         else if (horizontal > 0)
         {
@@ -115,6 +117,14 @@ public class Move : MonoBehaviour
             curTime -= Time.deltaTime;
         }
     }  //근접공격
+    private void TransAnimal()
+    {
+        
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            
+        }
+    } //수인화
     private void Jump()
     {
         if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))
