@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    Rigidbody2D projectileRigid;
-    public float speed;
-    // Start is called before the first frame update
+    private int moveSpeed = 5;
+    private Rigidbody2D projectileRigid;
+
+    private int speed;
+
     private void Awake()
     {
         projectileRigid = GetComponent<Rigidbody2D>();
     }
-    void Start()
+
+    private void FixedUpdate()
     {
-        speed = 2f;
-        projectileRigid.velocity = transform.forward * speed;
+        projectileRigid.velocity = new Vector2(speed, projectileRigid.velocity.y);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,7 +30,18 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
+    public void InstantiateBullet(GameObject Target)
+    {
+        if(Target.transform.position.x > transform.position.x)
+        {
+            speed = moveSpeed;
+        }
+        else
+        {
+            speed = -moveSpeed;
+        }
         Destroy(gameObject, 4f);
     }
 }

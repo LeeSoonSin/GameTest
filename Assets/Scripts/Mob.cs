@@ -6,13 +6,17 @@ using UnityEngine;
 public class Mob : Enemy
 {
     public Rigidbody2D MobRigid;
-    public float Distance; //공격 사거리
-    public int moveSpeed;
-    protected const int Speed = 2; //속력
-    public bool IsTracing;
     public CircleCollider2D circleCollider2D;
 
-    public float coolTime;//공격 쿨타임
+    protected int moveSpeed = 3; //속력
+    [SerializeField]
+    protected int speed; //변속
+
+    [SerializeField]
+    protected bool IsTracing;
+
+    protected float Distance; //공격 사거리
+    protected float coolTime = 2f;//공격 쿨타임
     protected float currentTime;
     public bool IsAttack;
 
@@ -21,7 +25,7 @@ public class Mob : Enemy
         circleCollider2D = transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
         MobRigid = GetComponent<Rigidbody2D>();
     }
-    void Start()
+    protected virtual void Start()
     {
         //target = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine("ChangeMovement");
@@ -32,18 +36,18 @@ public class Mob : Enemy
         Move();
 
         //플랫폼 체크
-        Vector2 front = new Vector2(MobRigid.position.x + moveSpeed, MobRigid.position.y);
+        Vector2 front = new Vector2(MobRigid.position.x + speed, MobRigid.position.y);
         Debug.DrawRay(front, Vector3.down, Color.red);
         RaycastHit2D rayHit = Physics2D.Raycast(front, Vector3.down, 1, LayerMask.GetMask("Wall"));
         if(rayHit.collider == null)
         {
-            moveSpeed *= -1;
+            speed *= -1;
         }
     }
 
     IEnumerator ChangeMovement()
     {
-        moveSpeed = Random.Range(-1, 2)*Speed;
+        speed = Random.Range(-1, 2)*moveSpeed;
         float randomTime = Random.Range(2f, 4f);
 
         yield return new WaitForSeconds(randomTime);
@@ -58,20 +62,20 @@ public class Mob : Enemy
 
             if (transform.position.x - playerPos.x > Distance )
             {
-                moveSpeed = -Speed;
+                speed = -moveSpeed;
             }
             else if(playerPos.x - transform.position.x > Distance)
             {
-                moveSpeed = Speed;
+                speed = moveSpeed;
             }
             else
             {
-                moveSpeed = 0;
+                speed = 0;
                 // 몬스터 공격
             }
         }
 
-        MobRigid.velocity = new Vector2(moveSpeed, MobRigid.velocity.y);
+        MobRigid.velocity = new Vector2(speed, MobRigid.velocity.y);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

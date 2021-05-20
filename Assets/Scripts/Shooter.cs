@@ -4,47 +4,37 @@ using UnityEngine;
 
 public class Shooter : Mob
 {
-    public GameObject projectile;
+    public GameObject projectiles;
     public Transform pos;
-
-    void Start()
+    
+    protected override void Start()
     {
+        base.Start();
         circleCollider2D.radius = 5f;
-        coolTime = 2f;
         Distance = 3f;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     protected override void Move()
     {
-        
-
         if (IsTracing)
         {
             Vector3 playerPos = target.transform.position;
-
             if (transform.position.x - playerPos.x > Distance)
             {
-                moveSpeed = -Speed;
+                speed = -moveSpeed;
             }
             else if (playerPos.x - transform.position.x > Distance)
             {
-                moveSpeed = Speed;
+                speed = moveSpeed;
             }
             else
             {
-                moveSpeed = 0;
+                speed = 0;
                 Attack();
                 // 몬스터 공격
             }
         }
-
-        MobRigid.velocity = new Vector2(moveSpeed, MobRigid.velocity.y);
+        MobRigid.velocity = new Vector2(speed, MobRigid.velocity.y);
     }
 
     protected void Attack()
@@ -53,8 +43,7 @@ public class Shooter : Mob
         if(currentTime <= 0)
         {
             IsAttack = true;
-            GameObject projectileCopy = Instantiate(projectile, pos.position, pos.rotation);
-            projectileCopy.transform.Translate()
+            Instantiate(projectiles, pos.position, pos.rotation).GetComponent<Projectile>().InstantiateBullet(target);
             currentTime = coolTime;
         }
         else
