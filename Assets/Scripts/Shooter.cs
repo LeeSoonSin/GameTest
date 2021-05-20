@@ -54,7 +54,6 @@ public class Shooter : Mob
         {
             IsAttack = true;
             GameObject projectileCopy = Instantiate(projectile, pos.position, pos.rotation);
-            projectileCopy.transform.Translate()
             currentTime = coolTime;
         }
         else
