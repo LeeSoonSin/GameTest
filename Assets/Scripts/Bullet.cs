@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using UnityEditor;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -7,10 +9,13 @@ public class Bullet : MonoBehaviour
     public float speed;
     public float distance;
     public LayerMask isLayer;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("DestroyBullet", 2); //일정시간이 지난 후 특정 함수를 호출 할 수 있음.(실행할 함수명, 지연시간)
+
+        Destroy(gameObject, 2f);
     }
 
     // Update is called once per frame
@@ -21,9 +26,12 @@ public class Bullet : MonoBehaviour
         {
             if(ray.collider.tag == "Enemy")
             {
+                //파티클이 뿜뿜Instantiate(프리팹, 포지션, 로테이션) as GameObject;
                 Debug.Log("명중!");
+                GameObject boom = Instantiate(Resources.Load<GameObject>("boom"), transform.position, Quaternion.identity); //프리팹에 있는거 갖고 오는 코드;
+                Destroy(boom, 1);
             }
-            DestroyBullet();
+            Destroy(gameObject);
         }
         if(transform.rotation.y == 0)
         {
@@ -33,10 +41,5 @@ public class Bullet : MonoBehaviour
         {
             transform.Translate(transform.right * -1 * speed * Time.deltaTime);
         }
-    }
-    
-    void DestroyBullet()
-    {
-        Destroy(gameObject);
     }
 }

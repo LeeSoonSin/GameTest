@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 //using System.Drawing;
 using UnityEngine;
 
 public class Move : MonoBehaviour
 {
     Rigidbody2D playerRigidbody;
+    PlayerStat playerStat;
     public float jumpPower;
     public float maxSpeed;
     SpriteRenderer spriteRenderer;
@@ -15,6 +17,14 @@ public class Move : MonoBehaviour
     public float coolTime = 0.5f;
     public Transform pos;
     public Vector2 boxSize;
+    public int transanimal;
+    public float transDelayTime = 1f; // 1초마다 분노게이지 1씩깍임
+    float transTimer = 0f;
+
+    private void Start()
+    {
+        playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
+    }
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
@@ -24,7 +34,6 @@ public class Move : MonoBehaviour
     //Stop Speed
     void Update()
     {
-        
         Attack(); //근접공격
         Jump();
         TransAnimal();
@@ -32,15 +41,7 @@ public class Move : MonoBehaviour
         {
             playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.normalized.x * 0.5f, playerRigidbody.velocity.y);
         }
-        //Animation
-        if(Mathf.Abs(playerRigidbody.velocity.x) < 0.3)
-        {
-            anim.SetBool("isWalking", false);
-        }
-        else
-        {
-            anim.SetBool("isWalking", true);
-        }
+        Animation();
     }
     private void OnDrawGizmos()
     {
@@ -98,6 +99,7 @@ public class Move : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
+            Debug.Log("공격한번한거?");
             if (curTime <= 0)
             {
                 Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
@@ -119,12 +121,33 @@ public class Move : MonoBehaviour
     }  //근접공격
     private void TransAnimal()
     {
-        
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && transanimal == 1 && playerStat.currentRage == 100)
         {
-            
+            Debug.Log("구미호로 변신!");
+            anim.SetBool("isTrans", true);
+            transanimal = 0;
         }
-    } //수인화
+        if(Input.GetKeyDown(KeyCode.F) && transanimal == 0 && playerStat.currentRage < 100)
+        {
+            anim.SetBool("isTrans", false);
+            transanimal = 1;
+        }
+        if(transanimal == 0) // 분노게이지가 줄어드는 조건식
+        {
+            transTimer += Time.deltaTime;
+            if(transTimer >= transDelayTime)
+            {
+                transTimer = 0f;
+                playerStat.currentRage -= 1;
+                if (playerStat.currentRage < 30)
+                {
+                    transanimal = 1;
+                    anim.SetBool("isTrans", false);
+                }
+            }
+        }
+
+    } //수인화, 1초마다 분노게이지 1씩깍임
     private void Jump()
     {
         if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))
@@ -133,4 +156,16 @@ public class Move : MonoBehaviour
             anim.SetBool("isJumping", true);
         }
     }
+    private void Animation()
+    {
+        //Animation
+        if (Mathf.Abs(playerRigidbody.velocity.x) < 0.3)
+        {
+            anim.SetBool("isWalking", false);
+        }
+        else
+        {
+            anim.SetBool("isWalking", true);
+        }
+    } // 애니메이션 true flase 모음
 }

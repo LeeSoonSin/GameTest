@@ -22,7 +22,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Q))
             {
-                Instantiate(bullet, pos.position, transform.rotation);
+                Instantiate(bullet, pos.position, transform.rotation);//쿼터니언은 자기그대로 고유의 값
             }
             curtime = cooltime;
         }
