@@ -21,22 +21,27 @@ public class Move : MonoBehaviour
     public float transDelayTime = 1f; // 1초마다 분노게이지 1씩깍임
     float transTimer = 0f;
 
-    private void Start()
-    {
-        playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
-    }
+    public State state;
+    private float DefcoolTime = 1f;
+    private float DefCurTime;
+
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
+    private void Start()
+    {
+        playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
+    }
     //Stop Speed
     void Update()
     {
         Attack(); //근접공격
-        Jump();
-        TransAnimal();
+        Jump(); //점프
+        TransAnimal(); //수인화
+        Guard(); //방어
         if (Input.GetButtonUp("Horizontal"))
         {
             playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.normalized.x * 0.5f, playerRigidbody.velocity.y);
@@ -156,6 +161,32 @@ public class Move : MonoBehaviour
             anim.SetBool("isJumping", true);
         }
     }
+    private void Guard()
+    {
+        if(Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if(!state.IsBlock)
+            {
+                DefCurTime = DefcoolTime;
+                state.IsBlock = true;
+                state.IsDamaged = false;
+                state.StartCoroutine(state.GuardCoroutine());
+            }
+        }
+
+        if(state.IsBlock)
+        {
+            if(!state.IsDamaged)
+            {
+                if(DefCurTime <= 0)
+                {
+                    state.IsDamaged = true;
+                }
+                DefCurTime -= Time.deltaTime;
+            }
+        }
+    }
+
     private void Animation()
     {
         //Animation

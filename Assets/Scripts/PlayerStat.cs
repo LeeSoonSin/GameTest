@@ -24,12 +24,6 @@ public class PlayerStat : MonoBehaviour
         currentRage = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void PlayerDamaged(int damage)
     {
         if(!state.IsDamaged)

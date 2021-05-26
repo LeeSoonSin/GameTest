@@ -10,7 +10,7 @@ public class State : MonoBehaviour
 
     private float delayTime = 5f;
     
-    public IEnumerator DefenceCoroutine() //방어 쿨타임
+    public IEnumerator GuardCoroutine() //방어 쿨타임
     {
         yield return new WaitForSeconds(delayTime);
         IsBlock = false;
