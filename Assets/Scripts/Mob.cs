@@ -15,10 +15,12 @@ public class Mob : Enemy
     [SerializeField]
     protected bool IsTracing;
 
+    [SerializeField]
     protected float Distance; //공격 사거리
+
     protected float coolTime = 2f;//공격 쿨타임
     protected float currentTime;
-    public bool IsAttack;
+    protected bool IsAttack;
 
     void Awake()
     {
@@ -28,7 +30,7 @@ public class Mob : Enemy
     protected virtual void Start()
     {
         //target = GameObject.FindGameObjectWithTag("Player");
-        StartCoroutine("ChangeMovement");
+        StartCoroutine(ChangeMovement());
         IsTracing = false;
     }
     void FixedUpdate()
@@ -51,7 +53,7 @@ public class Mob : Enemy
         float randomTime = Random.Range(2f, 4f);
 
         yield return new WaitForSeconds(randomTime);
-        StartCoroutine("ChangeMovement");
+        StartCoroutine(ChangeMovement());
     }
 
     protected virtual void Move() 
@@ -85,7 +87,7 @@ public class Mob : Enemy
         {
             target = collision.gameObject;
             IsTracing = true;
-            StopCoroutine("ChangeMovement");
+            StopCoroutine(ChangeMovement());
         }
     }
 
@@ -94,7 +96,7 @@ public class Mob : Enemy
         if(collision.gameObject.CompareTag("Player"))
         {
             IsTracing = false;
-            StartCoroutine("ChangeMovement");
+            StartCoroutine(ChangeMovement());
         }
     }
 }

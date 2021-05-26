@@ -187,6 +187,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 534040976681221121, guid: 339cb292ee037a740a68d5f75b0e6c5d, type: 3}
+      propertyPath: state
+      value: 
+      objectReference: {fileID: 2103674858}
+    - target: {fileID: 534040976681221124, guid: 339cb292ee037a740a68d5f75b0e6c5d, type: 3}
+      propertyPath: state
+      value: 
+      objectReference: {fileID: 2103674858}
     - target: {fileID: 534040976681221125, guid: 339cb292ee037a740a68d5f75b0e6c5d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -360,6 +368,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2103674857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2103674859}
+  - component: {fileID: 2103674858}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2103674858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103674857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 539b2e900baf1514ab0d6f8ca19082de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Transformation: 0
+  IsBlock: 0
+  IsDamaged: 1
+--- !u!4 &2103674859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103674857}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 25.122242, y: 9.27, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5087420834834190112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -370,6 +424,10 @@ PrefabInstance:
     - target: {fileID: 8884524982933817350, guid: 712b3b432258fd0488312bdde6dad19e, type: 3}
       propertyPath: m_Name
       value: Stooter
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884524982933817350, guid: 712b3b432258fd0488312bdde6dad19e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8884524982933817370, guid: 712b3b432258fd0488312bdde6dad19e, type: 3}
       propertyPath: m_RootOrder

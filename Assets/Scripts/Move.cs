@@ -11,10 +11,19 @@ public class Move : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator anim;
 
+    [SerializeField]
+    private float coolTime = 0.5f;
     private float curTime;
-    public float coolTime = 0.5f;
+
+    
+    private float DefcoolTime = 1f;
+    [SerializeField]
+    private float DefCurTime;
+
     public Transform pos;
     public Vector2 boxSize;
+
+    public State state;
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
@@ -26,6 +35,7 @@ public class Move : MonoBehaviour
     {
         Attack(); //근접공격
         Jump();
+        Defence();
         if(Input.GetButtonUp("Horizontal"))
         {
             playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.normalized.x * 0.5f, playerRigidbody.velocity.y);
@@ -101,7 +111,7 @@ public class Move : MonoBehaviour
                 Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
                 foreach (Collider2D collider in collider2Ds)
                 {
-                    if (collider.tag == "Enemy")
+                    if (collider.CompareTag("Enemy"))
                     {
                         Debug.Log("몬스터 피깍는 함수 만들어주세용:)");
                     }
@@ -121,6 +131,32 @@ public class Move : MonoBehaviour
         {
             playerRigidbody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
+        }
+    }
+
+    private void Defence()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if(!state.IsBlock)
+            {
+                DefCurTime = DefcoolTime;
+                state.IsBlock = true;
+                state.IsDamaged = false;
+                state.StartCoroutine(state.DefenceCoroutine());
+            }
+        }
+        
+        if(state.IsBlock)
+        {
+            if(!state.IsDamaged)
+            {
+                if(DefCurTime <= 0)
+                {
+                    state.IsDamaged = true;
+                }
+                DefCurTime -= Time.deltaTime;
+            }
         }
     }
 }

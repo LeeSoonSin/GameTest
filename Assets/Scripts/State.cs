@@ -4,27 +4,15 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-    public bool Transformation; //수인화 상태
-    public bool IsBlock; //방어 상태
-    public bool IsDamaged; //피격 상태
+    public bool Transformation = false; //수인화 상태
+    public bool IsBlock = false; //방어 상태
+    public bool IsDamaged = true; //무적 상태 (false일 경우 무적)
 
-    private float delayTime = 1f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        Transformation = false;
-        IsBlock = false;
-        IsDamaged = false;
-    }
-
-    private void Update()
-    {
-        
-    }
-
-    IEnumerator BlockingCoroutine()
+    private float delayTime = 5f;
+    
+    public IEnumerator DefenceCoroutine() //방어 쿨타임
     {
         yield return new WaitForSeconds(delayTime);
-        IsDamaged = false;
+        IsBlock = false;
     }
 }

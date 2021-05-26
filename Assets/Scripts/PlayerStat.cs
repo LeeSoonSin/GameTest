@@ -4,25 +4,42 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
-    public float HP; //체력
-    public float currentHP; //현재 체력
-    public float Atk; //공격력
-    public float Def; //방어력
-    public float Luck; //운
-    public float Rage; //분노게이지
-    public float currentRage; //현재 분노게이지
+    public int HP = 100; //체력
+    public int currentHP; //현재 체력
+    public int Atk; //공격력
+    public int Def; //방어력
+    public int Luck; //운
+    public int Rage = 50; //분노게이지
+    public int currentRage; //현재 분노게이지
 
+    private bool dead = false;
+
+    public State state;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        currentHP = HP;
+        Def = 0;
+        currentRage = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(HP <= 0f)
+        
+    }
+
+    public void PlayerDamaged(int damage)
+    {
+        if(!state.IsDamaged)
+        {
+            state.IsDamaged = true;
+            return;
+        }
+
+        currentHP -= damage;
+        if (HP <= 0)
         {
             Die();
         }
@@ -30,6 +47,7 @@ public class PlayerStat : MonoBehaviour
 
     private void Die()
     {
+        dead = true;
         Debug.Log("으앙쥬금");
     }
 }
