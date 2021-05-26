@@ -43,7 +43,7 @@ public class Shooter : Mob
         if(currentTime <= 0)
         {
             IsAttack = true;
-            Instantiate(projectiles, pos.position, pos.rotation).GetComponent<Projectile>().InstantiateBullet(target);
+            Instantiate(projectiles, pos.position, pos.rotation).GetComponent<Projectile>().InstantiateBullet(target, Atk);
             currentTime = coolTime;
         }
         else

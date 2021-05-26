@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
 {
     private int moveSpeed = 5;
     private Rigidbody2D projectileRigid;
+    private int damage;
 
     private int speed;
 
@@ -19,22 +20,10 @@ public class Projectile : MonoBehaviour
         projectileRigid.velocity = new Vector2(speed, projectileRigid.velocity.y);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void InstantiateBullet(GameObject Target, int _damage)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Hit");
-            Destroy(gameObject);
-        }
-        else if (collision.gameObject.CompareTag("Wall"))
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    public void InstantiateBullet(GameObject Target)
-    {
-        if(Target.transform.position.x > transform.position.x)
+        damage = _damage;
+        if (Target.transform.position.x > transform.position.x)
         {
             speed = moveSpeed;
         }
@@ -43,5 +32,20 @@ public class Projectile : MonoBehaviour
             speed = -moveSpeed;
         }
         Destroy(gameObject, 4f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerStat playerstat = collision.GetComponent<PlayerStat>();
+            Debug.Log("Hit");
+            playerstat.PlayerDamaged(damage);
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

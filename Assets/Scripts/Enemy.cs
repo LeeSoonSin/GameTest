@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float HP; //체력
-    public float Atk; //공격력
+    public int HP; //체력
+    public int currentHP;
+    public int Atk; //공격력
     protected string Name; //이름
     public GameObject target;
 
-    // Start is called before the first frame update
-    void Start()
+    private bool dead = false;
+
+    public void EnemyDamaged(int damage)
     {
-        
+        currentHP -= damage;
+        if (HP <= 0)
+        {
+            Die();
+        }
     }
 
+    private void Die()
+    {
+        dead = true;
+        Debug.Log("으앙쥬금");
+        Destroy(gameObject);
+    }
 }
