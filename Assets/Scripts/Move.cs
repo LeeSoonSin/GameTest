@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 //using System.Drawing;
 using UnityEngine;
 
@@ -20,6 +19,7 @@ public class Move : MonoBehaviour
     public int transanimal;
     public float transDelayTime = 1f; // 1초마다 분노게이지 1씩깍임
     float transTimer = 0f;
+    public bool notActive; // 이 함수가 참일때는 활동 못함.(특히 점프일때 다른 스킬이나 그런거 못함.)
 
     private void Start()
     {
@@ -42,6 +42,7 @@ public class Move : MonoBehaviour
             playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.normalized.x * 0.5f, playerRigidbody.velocity.y);
         }
         Animation();
+        BuffSkill();
     }
     private void OnDrawGizmos()
     {
@@ -68,6 +69,7 @@ public class Move : MonoBehaviour
                 if (rayHit.distance < 0.5f)
                 {
                     anim.SetBool("isJumping", false);
+                    notActive = false;
                 }
             }
         }
@@ -99,26 +101,30 @@ public class Move : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("공격한번한거?");
-            if (curTime <= 0)
+            if (curTime <= 0 && notActive == false)
             {
+                notActive = true;
+                maxSpeed = 0;
                 Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
                 foreach (Collider2D collider in collider2Ds)
                 {
                     if (collider.tag == "Enemy")
                     {
                         Debug.Log("몬스터 피깍는 함수 만들어주세용:)");
+                        Invoke("atkWait", 1.1f);
+                        break;
                     }
                 }
                 anim.SetTrigger("atk");
                 curTime = coolTime;
+                Invoke("atkWait", 1.1f);
             }
         }
         else
         {
             curTime -= Time.deltaTime;
         }
-    }  //근접공격
+    }  //근접공격 (공격하면서 바라보는 방향으로 이동하는거 아직 구현 못함.)
     private void TransAnimal()
     {
         if (Input.GetKeyDown(KeyCode.F) && transanimal == 1 && playerStat.currentRage == 100)
@@ -150,10 +156,11 @@ public class Move : MonoBehaviour
     } //수인화, 1초마다 분노게이지 1씩깍임
     private void Jump()
     {
-        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))
+        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping") && notActive == false)
         {
             playerRigidbody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
+            notActive = true;
         }
     }
     private void Animation()
@@ -168,4 +175,16 @@ public class Move : MonoBehaviour
             anim.SetBool("isWalking", true);
         }
     } // 애니메이션 true flase 모음
+    private void BuffSkill() // 스킬 버프
+    {
+        if(Input.GetKeyDown(KeyCode.W) && notActive == false)
+        {
+            anim.SetBool("isBuff", true);
+        }
+    }
+    private void atkWait()
+    {
+        notActive = false;
+        maxSpeed = 5;
+    }
 }
