@@ -21,7 +21,7 @@ public class PlayerStat : MonoBehaviour
     {
         currentHP = HP;
         Def = 0;
-        currentRage = 0;
+        currentRage = 100;
     }
 
     public void PlayerDamaged(int damage)
