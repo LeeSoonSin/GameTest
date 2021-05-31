@@ -167,14 +167,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9531d116313d0941a6e336a636c1ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 18
-  maxSpeed: 5
-  coolTime: 0.5
+  mem_horizontal: 0
+  IsDamaged: 1
+  IsGuard: 0
+  IsAttack: 0
+  transanimal: 1
+  notActive: 0
+  curTime: 0
   pos: {fileID: 1862630607}
   boxSize: {x: 0.2, y: 1}
-  transanimal: 1
-  transDelayTime: 1
-  notActive: 0
 --- !u!95 &534040976681221126
 Animator:
   serializedVersion: 3
@@ -210,7 +211,7 @@ MonoBehaviour:
   currentHP: 100
   Atk: 5
   Def: 5
-  Heal: 5
+  Luck: 0
   Rage: 100
   currentRage: 100
 --- !u!70 &-353304346932929886

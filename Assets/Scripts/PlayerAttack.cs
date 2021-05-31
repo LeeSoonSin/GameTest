@@ -11,11 +11,11 @@ public class PlayerAttack : MonoBehaviour
     private float curtime;
 
     Animator anim;
-    Move move;
+    PlayerControl playerControl;
     // Start is called before the first frame update
     void Start()
     {
-        move = GameObject.Find("Player").GetComponent<Move>();
+        playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
         anim = GameObject.Find("Player").GetComponent<Animator>();
     }
 
@@ -24,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if(curtime <= 0)
         {
-            if (Input.GetKey(KeyCode.Q) && move.notActive == false)
+            if (Input.GetKey(KeyCode.Q) && playerControl.notActive == false)
             {
                 anim.SetBool("isArrow", true);
                 Invoke("InstaniBullet", 1.6f);

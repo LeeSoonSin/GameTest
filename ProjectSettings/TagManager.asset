@@ -4,9 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - Wall
   - Projectile
+  - Enemy_Trace
+  - Shooter
+  - Infighter
+  - Boss
   layers:
   - Default
   - TransparentFX
