@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour
 {
     Animator anim;
     SpriteRenderer spriteRenderer;
+    public string currentMapName;
 
     //Move 관련 변수
     Rigidbody2D playerRigidbody;
@@ -49,6 +50,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
     }
     //Stop Speed
@@ -115,13 +117,24 @@ public class PlayerControl : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
         }
+
         if (playerRigidbody.velocity.x > maxSpeed)
         {
             playerRigidbody.velocity = new Vector2(maxSpeed, playerRigidbody.velocity.y);
         }
+
         if (playerRigidbody.velocity.x < (-1) * maxSpeed)
         {
             playerRigidbody.velocity = new Vector2((-1) * maxSpeed, playerRigidbody.velocity.y);
+        }
+
+        if (playerRigidbody.velocity.normalized.x == 0)
+        {
+            anim.SetBool("isWalking", false);
+        }
+        else
+        {
+            anim.SetBool("isWalking", true);
         }
     }
     private void Attack()
