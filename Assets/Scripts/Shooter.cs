@@ -10,6 +10,9 @@ public class Shooter : Mob
     protected override void Start()
     {
         base.Start();
+        HP = 70;
+        currentHP = HP;
+        Atk = 20;
         circleCollider2D.radius = 5f;
         Distance = 3f;
     }
@@ -53,4 +56,6 @@ public class Shooter : Mob
         
         currentTime -= Time.deltaTime;
     }
+
+    
 }

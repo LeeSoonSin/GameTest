@@ -3,28 +3,43 @@ using System.Collections.Generic;
 //using System.Drawing;
 using UnityEngine;
 
-public class Move : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
-    public string currentMapName; // transferMap 스크립트에 있는 transferMapName 변수의 값을 저장.
+    Animator anim;
+    SpriteRenderer spriteRenderer;
+
+    //Move 관련 변수
     Rigidbody2D playerRigidbody;
     PlayerStat playerStat;
-    public float jumpPower;
-    public float maxSpeed;
-    SpriteRenderer spriteRenderer;
-    Animator anim;
+    private float jumpPower = 18f;
+    public float maxSpeed = 5f;
+    [SerializeField]
+    private float mem_horizontal = 0;
 
-    private float curTime;
-    public float coolTime = 0.5f;
+    //상태 관련 변수
+    public bool IsDamaged = true;
+    [SerializeField]
+    private bool IsGuard = false;
+    [SerializeField]
+    private bool IsAttack = false;
+    public bool transanimal = false;
+    public bool notActive = false; // 이 함수가 참일때는 활동 못함.(특히 점프일때 다른 스킬이나 그런거 못함.)
+
+    [SerializeField]
+    //Attack 관련 변수
+    private float curTime = 0;
+    private float coolTime = 1.1f;
     public Transform pos;
     public Vector2 boxSize;
-    public int transanimal = 1;
-    public float transDelayTime = 1f; // 1초마다 분노게이지 1씩깍임
+    
+    //Transanimal 관련 변수
+    private float transDelayTime = 1f; // 1초마다 분노게이지 1씩깍임
     float transTimer = 0f;
-    public bool notActive; // 이 함수가 참일때는 활동 못함.(특히 점프일때 다른 스킬이나 그런거 못함.)
 
-    public State state;
-    private float DefcoolTime = 1f;
-    private float DefCurTime;
+    //Guard 관련 변수
+    private float GuardDelay = 5f;
+    private float HoldGuardTime = 1f; //가드 유지 시간
+    private float GuardCurTime;
 
     private void Awake()
     {
@@ -34,7 +49,6 @@ public class Move : MonoBehaviour
     }
     private void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
         playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
     }
     //Stop Speed
@@ -86,14 +100,20 @@ public class Move : MonoBehaviour
         //Move Speed
         float horizontal = Input.GetAxisRaw("Horizontal");
         playerRigidbody.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);
-        //최대속도 구현하기. velocity는 그 오브젝트의 속도를 말함.
-        if (horizontal < 0)
+
+        if (!IsAttack || !IsGuard)
         {
-            transform.eulerAngles = new Vector3(0, -180, 0);
-        }
-        else if (horizontal > 0)
-        {
-            transform.eulerAngles = new Vector3(0, 0, 0);
+            mem_horizontal = horizontal;
+
+            //최대속도 구현하기. velocity는 그 오브젝트의 속도를 말함.
+            if (horizontal < 0)
+            {
+                transform.eulerAngles = new Vector3(0, -180, 0);
+            }
+            else if (horizontal > 0)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+            }
         }
         if (playerRigidbody.velocity.x > maxSpeed)
         {
@@ -103,14 +123,6 @@ public class Move : MonoBehaviour
         {
             playerRigidbody.velocity = new Vector2((-1) * maxSpeed, playerRigidbody.velocity.y);
         }
-        if(playerRigidbody.velocity.normalized.x == 0)
-        {
-            anim.SetBool("isWalking", false);
-        }
-        else
-        {
-            anim.SetBool("isWalking", true);
-        }
     }
     private void Attack()
     {
@@ -118,20 +130,25 @@ public class Move : MonoBehaviour
         {
             if (curTime <= 0 && notActive == false)
             {
+                
                 notActive = true;
+                IsAttack = true;
                 maxSpeed = 0;
-                Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
-                foreach (Collider2D collider in collider2Ds)
-                {
-                    if (collider.tag == "Enemy")
-                    {
-                        Debug.Log("몬스터 피깍는 함수 만들어주세용:)");
-                        Invoke("atkWait", 1.1f);
-                        break;
-                    }
-                }
-                anim.SetTrigger("atk");
                 curTime = coolTime;
+                //Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
+                //foreach (Collider2D collider in collider2Ds)
+                //{
+                //    if (collider.CompareTag("Shooter"))
+                //    {
+                //        Shooter shooter = collider.GetComponent<Shooter>();
+                //        shooter.EnemyDamaged(playerStat.Atk);
+                //        break;
+                //    }
+                //}
+                AttackRange();
+                Invoke("AttackRange", 0.5f);
+
+                anim.SetTrigger("atk");
                 Invoke("atkWait", 1.1f);
             }
         }
@@ -140,22 +157,37 @@ public class Move : MonoBehaviour
             curTime -= Time.deltaTime;
         }
     }  //근접공격 (공격하면서 바라보는 방향으로 이동하는거 아직 구현 못함.)
+
+    void AttackRange()
+    {
+        transform.Translate(new Vector2(0.25f, 0));
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            if (collider.CompareTag("Shooter"))
+            {
+                Shooter shooter = collider.GetComponent<Shooter>();
+                shooter.EnemyDamaged(playerStat.Atk);
+                Invoke("atkWait", 1.1f); // 이동불가 + 행동 활성화
+                break;
+            }
+        }
+    }
+
     private void TransAnimal()
     {
-        if (Input.GetKeyDown(KeyCode.F) && transanimal == 1 && playerStat.currentRage == 100)
+        if (Input.GetKeyDown(KeyCode.F) && transanimal && playerStat.currentRage == 100)
         {
-
             Debug.Log("구미호로 변신!");
             anim.SetBool("isTrans", true);
-            transanimal = 0;
+            transanimal = false;
         }
-        if(Input.GetKeyDown(KeyCode.F) && transanimal == 0 && playerStat.currentRage < 100)
+        if(Input.GetKeyDown(KeyCode.F) && !transanimal && playerStat.currentRage < 100)
         {
-
             anim.SetBool("isTrans", false);
-            transanimal = 1;
+            transanimal = true;
         }
-        if(transanimal == 0) // 분노게이지가 줄어드는 조건식
+        if(!transanimal) // 분노게이지가 줄어드는 조건식
         {
             transTimer += Time.deltaTime;
             if(transTimer >= transDelayTime)
@@ -164,7 +196,7 @@ public class Move : MonoBehaviour
                 playerStat.currentRage -= 1;
                 if (playerStat.currentRage < 30)
                 {
-                    transanimal = 1;
+                    transanimal = true;
                     anim.SetBool("isTrans", false);
                 }
             }
@@ -182,30 +214,38 @@ public class Move : MonoBehaviour
     }
     private void Guard()
     {
-        if(Input.GetKeyDown(KeyCode.DownArrow))
+        if(Input.GetKeyDown(KeyCode.S) && !notActive)
         {
-            if(!state.IsBlock)
+            if(!IsGuard)
             {
-                DefCurTime = DefcoolTime;
-                state.IsBlock = true;
-                state.IsDamaged = false;
-                state.StartCoroutine(state.GuardCoroutine());
+                GuardCurTime = HoldGuardTime;
+                IsGuard = true;
+                IsDamaged = false;
+                notActive = true;
+                maxSpeed = 0f;
+                StartCoroutine(GuardCoroutine());
             }
         }
-
-        if(state.IsBlock)
+        if(IsGuard)
         {
-            if(!state.IsDamaged)
+            if(!IsDamaged)
             {
-                if(DefCurTime <= 0)
+                if(GuardCurTime <= 0)
                 {
-                    state.IsDamaged = true;
+                    IsDamaged = true;
+                    notActive = false;
+                    maxSpeed = 5f;
                 }
-                DefCurTime -= Time.deltaTime;
+                GuardCurTime -= Time.deltaTime;
             }
         }
     }
 
+    IEnumerator GuardCoroutine()
+    {
+        yield return new WaitForSeconds(GuardDelay);
+        IsGuard = false;
+    }
     private void Animation()
     {
         //Animation
@@ -228,6 +268,7 @@ public class Move : MonoBehaviour
     private void atkWait()
     {
         notActive = false;
-        maxSpeed = 5;
+        IsAttack = false;
+        maxSpeed = 5f;
     }
 }

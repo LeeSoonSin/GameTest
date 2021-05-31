@@ -39,7 +39,6 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerStat playerstat = collision.GetComponent<PlayerStat>();
-            Debug.Log("Hit");
             playerstat.PlayerDamaged(damage);
             Destroy(gameObject);
         }

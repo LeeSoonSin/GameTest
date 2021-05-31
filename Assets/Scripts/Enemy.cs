@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     public void EnemyDamaged(int damage)
     {
         currentHP -= damage;
-        if (HP <= 0)
+        if (currentHP <= 0)
         {
             Die();
         }

@@ -14,7 +14,12 @@ public class PlayerStat : MonoBehaviour
 
     private bool dead = false;
 
-    public State state;
+    PlayerControl playerControl;
+
+    private void Awake()
+    {
+        playerControl = GetComponent<PlayerControl>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,14 +31,16 @@ public class PlayerStat : MonoBehaviour
 
     public void PlayerDamaged(int damage)
     {
-        if(!state.IsDamaged)
+        if(!playerControl.IsDamaged)
         {
-            state.IsDamaged = true;
+            playerControl.IsDamaged = true;
+            playerControl.notActive = false;
+            playerControl.maxSpeed = 5f;
             return;
         }
 
         currentHP -= damage;
-        if (HP <= 0)
+        if (currentHP <= 0)
         {
             Die();
         }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7693695003682748311}
   m_Layer: 7
   m_Name: Mob
-  m_TagString: Enemy
+  m_TagString: Infighter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,12 +146,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 0
+  currentHP: 0
   Atk: 0
   target: {fileID: 0}
-  Distance: 1
-  moveSpeed: 0
-  IsTracing: 0
+  MobRigid: {fileID: 0}
   circleCollider2D: {fileID: 0}
+  speed: 0
+  IsTracing: 0
+  Distance: 1
 --- !u!1 &7693695003708601796
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +166,7 @@ GameObject:
   - component: {fileID: 7693695003708601798}
   m_Layer: 8
   m_Name: Trace
-  m_TagString: Enemy
+  m_TagString: Enemy_Trace
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
         RaycastHit2D ray = Physics2D.Raycast(transform.position, transform.right, distance, isLayer);
         if(ray.collider != null)
         {
-            if(ray.collider.tag == "Enemy")
+            if(ray.collider.CompareTag("Shooter"))
             {
                 //파티클이 뿜뿜Instantiate(프리팹, 포지션, 로테이션) as GameObject;
                 Debug.Log("명중!");
