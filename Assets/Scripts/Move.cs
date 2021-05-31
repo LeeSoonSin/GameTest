@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
+    public string currentMapName; // transferMap 스크립트에 있는 transferMapName 변수의 값을 저장.
     Rigidbody2D playerRigidbody;
     PlayerStat playerStat;
     public float jumpPower;
@@ -16,7 +17,7 @@ public class Move : MonoBehaviour
     public float coolTime = 0.5f;
     public Transform pos;
     public Vector2 boxSize;
-    public int transanimal;
+    public int transanimal = 1;
     public float transDelayTime = 1f; // 1초마다 분노게이지 1씩깍임
     float transTimer = 0f;
     public bool notActive; // 이 함수가 참일때는 활동 못함.(특히 점프일때 다른 스킬이나 그런거 못함.)
@@ -33,6 +34,7 @@ public class Move : MonoBehaviour
     }
     private void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
     }
     //Stop Speed
@@ -101,6 +103,14 @@ public class Move : MonoBehaviour
         {
             playerRigidbody.velocity = new Vector2((-1) * maxSpeed, playerRigidbody.velocity.y);
         }
+        if(playerRigidbody.velocity.normalized.x == 0)
+        {
+            anim.SetBool("isWalking", false);
+        }
+        else
+        {
+            anim.SetBool("isWalking", true);
+        }
     }
     private void Attack()
     {
@@ -134,12 +144,14 @@ public class Move : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && transanimal == 1 && playerStat.currentRage == 100)
         {
+
             Debug.Log("구미호로 변신!");
             anim.SetBool("isTrans", true);
             transanimal = 0;
         }
         if(Input.GetKeyDown(KeyCode.F) && transanimal == 0 && playerStat.currentRage < 100)
         {
+
             anim.SetBool("isTrans", false);
             transanimal = 1;
         }

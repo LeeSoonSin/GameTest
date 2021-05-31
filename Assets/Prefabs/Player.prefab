@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9531d116313d0941a6e336a636c1ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMapName: 
   jumpPower: 18
   maxSpeed: 5
   coolTime: 0.5
@@ -175,6 +176,7 @@ MonoBehaviour:
   transanimal: 1
   transDelayTime: 1
   notActive: 0
+  state: {fileID: 0}
 --- !u!95 &534040976681221126
 Animator:
   serializedVersion: 3
@@ -210,9 +212,10 @@ MonoBehaviour:
   currentHP: 100
   Atk: 5
   Def: 5
-  Heal: 5
+  Luck: 0
   Rage: 100
   currentRage: 100
+  state: {fileID: 0}
 --- !u!70 &-353304346932929886
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
