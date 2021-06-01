@@ -167,6 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9531d116313d0941a6e336a636c1ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMapName: 
+  maxSpeed: 5
   mem_horizontal: 0
   IsDamaged: 1
   IsGuard: 0
@@ -209,8 +211,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 100
   currentHP: 100
-  Atk: 5
-  Def: 5
+  Atk: 10
+  Def: 50
   Luck: 0
   Rage: 100
   currentRage: 100
@@ -243,6 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 986646401814130089, guid: d84578e564ef793439b06aedeaf365c0, type: 3}
+  foxFireball: {fileID: 986646401814130089, guid: 210fbbda8c822b547a30091323d0bcbd, type: 3}
   pos: {fileID: 6377222117088316725}
   cooltime: 0.3
 --- !u!1 &4886354413331242625

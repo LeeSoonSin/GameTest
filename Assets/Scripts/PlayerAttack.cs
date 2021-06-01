@@ -6,6 +6,7 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField]
     public GameObject bullet;
+    public GameObject foxFireball;
     public Transform pos;
     public float cooltime;
     private float curtime;
@@ -22,12 +23,30 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(curtime <= 0)
+        ArrowSkill();
+        FoxfireSkill();
+    }
+    void ArrowSkill()
+    {
+        if (curtime <= 0)
         {
             if (Input.GetKey(KeyCode.Q) && playerControl.notActive == false)
             {
                 anim.SetBool("isArrow", true);
                 Invoke("InstaniBullet", 1.6f);
+            }
+            curtime = cooltime;
+        }
+        curtime -= Time.deltaTime;
+    }
+    void FoxfireSkill()
+    {
+        if (curtime <= 0)
+        {
+            if (Input.GetKey(KeyCode.E) && playerControl.notActive == false)
+            {
+                anim.SetBool("isFoxfire", true);
+                Invoke("InstaniFoxFireball", 1.6f);
             }
             curtime = cooltime;
         }
@@ -39,8 +58,18 @@ public class PlayerAttack : MonoBehaviour
         Invoke("Isarrowfalse", 0.5f);
         
     }//¹Ø°ú ¿¬°èµÊ
+    private void InstaniFoxFireball()
+    {
+        Instantiate(foxFireball, pos.position, transform.rotation);//ÄõÅÍ´Ï¾ðÀº ÀÚ±â±×´ë·Î °íÀ¯ÀÇ °ª
+        Invoke("IsFoxfirefalse", 0.5f);
+
+    }//¹Ø°ú ¿¬°èµÊ
     private void Isarrowfalse()
     {
         anim.SetBool("isArrow", false);
+    }//À§¿Í ¿¬°èµÊ
+    private void IsFoxfirefalse()
+    {
+        anim.SetBool("isFoxfire", false);
     }//À§¿Í ¿¬°èµÊ
 }
