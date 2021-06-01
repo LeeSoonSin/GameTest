@@ -73,11 +73,15 @@ public class Mob : Enemy
             else
             {
                 speed = 0;
-                // 몬스터 공격
+                Attack();
             }
         }
 
         MobRigid.velocity = new Vector2(speed, MobRigid.velocity.y);
+    }
+
+    protected virtual void Attack()
+    {
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

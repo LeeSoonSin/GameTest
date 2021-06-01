@@ -171,13 +171,13 @@ public class PlayerControl : MonoBehaviour
         }
     }  //근접공격 (공격하면서 바라보는 방향으로 이동하는거 아직 구현 못함.)
 
-    void AttackRange()
+    void AttackRange()  
     {
         transform.Translate(new Vector2(0.25f, 0));
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
         foreach (Collider2D collider in collider2Ds)
         {
-            if (collider.CompareTag("Shooter"))
+            if (collider.CompareTag("Shooter")||collider.CompareTag("Infighter")||collider.CompareTag("Boss"))
             {
                 Shooter shooter = collider.GetComponent<Shooter>();
                 shooter.EnemyDamaged(playerStat.Atk);
