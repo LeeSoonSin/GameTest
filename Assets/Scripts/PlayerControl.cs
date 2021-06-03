@@ -42,11 +42,16 @@ public class PlayerControl : MonoBehaviour
     private float HoldGuardTime = 1f; //가드 유지 시간
     private float GuardCurTime;
 
+    //Buff 관련 변수
+    private bool isBuffcoolTime = false;
+    public GameObject Energy;
+
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        Energy = GetComponent<GameObject>();
     }
     private void Start()
     {
@@ -66,6 +71,7 @@ public class PlayerControl : MonoBehaviour
         }
         Animation();
         BuffSkill();
+        HealingSkill();
     }
     private void OnDrawGizmos()
     {
@@ -189,13 +195,13 @@ public class PlayerControl : MonoBehaviour
 
     private void TransAnimal()
     {
-        if (Input.GetKeyDown(KeyCode.F) && transanimal && playerStat.currentRage == 100)
+        if (Input.GetKeyDown(KeyCode.F) && transanimal && playerStat.currentRage > 10)
         {
             Debug.Log("구미호로 변신!");
             anim.SetBool("isTrans", true);
             transanimal = false;
         }
-        if(Input.GetKeyDown(KeyCode.F) && !transanimal && playerStat.currentRage < 100)
+        else if(Input.GetKeyDown(KeyCode.F) && !transanimal && playerStat.currentRage < 100)
         {
             anim.SetBool("isTrans", false);
             transanimal = true;
@@ -207,7 +213,7 @@ public class PlayerControl : MonoBehaviour
             {
                 transTimer = 0f;
                 playerStat.currentRage -= 1;
-                if (playerStat.currentRage < 30)
+                if (playerStat.currentRage < 1)
                 {
                     transanimal = true;
                     anim.SetBool("isTrans", false);
@@ -273,15 +279,43 @@ public class PlayerControl : MonoBehaviour
     } // 애니메이션 true flase 모음
     private void BuffSkill() // 스킬 버프
     {
-        if(Input.GetKeyDown(KeyCode.W) && notActive == false)
+        if(Input.GetKeyDown(KeyCode.W) && notActive == false && isBuffcoolTime == false)
         {
+            isBuffcoolTime = true;
             anim.SetBool("isBuff", true);
+            //공격력 +10
+            Invoke("CancelBuff", 60f);
+            Energy.SetActive(true);
         }
+    }
+    void CancelBuff()
+    {
+        anim.SetBool("isBuff", false);
+        //방어력 -20
+        Energy.SetActive(false);
+        Invoke("ReturnBuff", 30f);
+    }
+    void ReturnBuff()
+    {
+        //방어력 + 20
+        isBuffcoolTime = false;
     }
     private void atkWait()
     {
         notActive = false;
         IsAttack = false;
         maxSpeed = 5f;
+    }
+    private void HealingSkill()
+    {
+        if(Input.GetKeyDown(KeyCode.R) && notActive == false)
+        {
+            notActive = true;
+            maxSpeed = 0f;
+            //피 1초마다 5씩 회복하게 하기.
+            GameObject healing = Instantiate(Resources.Load<GameObject>("healing"), transform.position, Quaternion.identity);
+            Destroy(healing, 4);
+            Invoke("atkWait", 4);
+        }
     }
 }
