@@ -15,10 +15,13 @@ public class TransferMap : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name == "Player")// 닿은 것의 게임오브젝트 이름이 플레이어라면
+        if(collision.gameObject.name == "Player") // 닿은 것의 게임오브젝트 이름이 플레이어라면
         {
-            thePlayer.currentMapName = transferMapName;
-            SceneManager.LoadScene(transferMapName);
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                thePlayer.currentMapName = transferMapName;
+                SceneManager.LoadScene(transferMapName);
+            }
         }
     }
 }

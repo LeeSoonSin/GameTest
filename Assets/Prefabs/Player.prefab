@@ -179,8 +179,7 @@ MonoBehaviour:
   curTime: 0
   pos: {fileID: 1862630607}
   boxSize: {x: 0.2, y: 1}
-  Energy: {fileID: 2794051385369665584, guid: cb4ab090db61243459621f2b63eb458e, type: 3}
-  Energy2: {fileID: 2794051385369665589, guid: cb4ab090db61243459621f2b63eb458e, type: 3}
+  Energy: {fileID: 0}
 --- !u!95 &534040976681221126
 Animator:
   serializedVersion: 3
@@ -294,7 +293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2794051385369665584, guid: cb4ab090db61243459621f2b63eb458e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2794051385369665589, guid: cb4ab090db61243459621f2b63eb458e, type: 3}
       propertyPath: InitialModule.startLifetime.scalar

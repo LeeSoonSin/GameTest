@@ -44,14 +44,14 @@ public class PlayerControl : MonoBehaviour
 
     //Buff 관련 변수
     private bool isBuffcoolTime = false;
-    public GameObject Energy;
+    public GameObject Energy = null;
 
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        Energy = GetComponent<GameObject>();
+        //Energy = GetComponent<GameObject>();
     }
     private void Start()
     {
