@@ -25,7 +25,8 @@ public class TransferMap : MonoBehaviour
                 SceneManager.LoadScene(transferMapName);
                 gameManager.isDoor = false;
                 gameManager.isRound = true;
-                gameManager.RoundNumber += 1;
+                //gameManager.RoundNumber += 1;
+                gameManager.buildIndex += 1;
             }
         }
     }

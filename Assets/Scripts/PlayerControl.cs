@@ -308,6 +308,7 @@ public class PlayerControl : MonoBehaviour
     void CancelBuff()
     {
         anim.SetBool("isBuff", false);
+        //공격력 -10
         //방어력 -20
         Energy.SetActive(false);
         Invoke("ReturnBuff", 30f);

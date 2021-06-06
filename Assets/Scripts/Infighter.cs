@@ -51,4 +51,5 @@ public class Infighter : Mob
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(pos.position, boxSize);
     }
+
 }

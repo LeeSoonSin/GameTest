@@ -28,5 +28,8 @@ public abstract class Enemy : MonoBehaviour//MonoBehaviour
         }
     }
 
-    protected abstract void Die();
+    protected virtual void Die()
+    {
+
+    }
 }

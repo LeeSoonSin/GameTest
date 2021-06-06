@@ -8,7 +8,7 @@ public class Mob : Enemy
     public Rigidbody2D MobRigid;
     public CircleCollider2D circleCollider2D;
 
-    protected int moveSpeed = 3; //속력
+    public int moveSpeed = 3; //속력
     [SerializeField]
     protected int speed; //변속
 
@@ -42,12 +42,25 @@ public class Mob : Enemy
         Move();
 
         //플랫폼 체크
-        Vector2 front = new Vector2(MobRigid.position.x + speed, MobRigid.position.y);
-        Debug.DrawRay(front, Vector3.down, Color.red);
-        RaycastHit2D rayHit = Physics2D.Raycast(front, Vector3.down, 1, LayerMask.GetMask("Wall"));
-        if(rayHit.collider == null)
+        if(speed != 0)
         {
-            speed *= -1;
+            Vector2 front = new Vector2(MobRigid.position.x + Mathf.Abs(speed) / speed, MobRigid.position.y);
+            Debug.DrawRay(front, Vector3.down, Color.red);
+            RaycastHit2D rayHit = Physics2D.Raycast(front, Vector3.down, 1, LayerMask.GetMask("Wall"));
+            if (rayHit.collider == null)
+            {
+                speed *= -1;
+            }
+        }
+        else
+        {
+            Vector2 front = new Vector2(MobRigid.position.x , MobRigid.position.y);
+            Debug.DrawRay(front, Vector3.down, Color.red);
+            RaycastHit2D rayHit = Physics2D.Raycast(front, Vector3.down, 1, LayerMask.GetMask("Wall"));
+            if (rayHit.collider == null)
+            {
+                speed *= -1;
+            }
         }
     }
 
@@ -87,6 +100,17 @@ public class Mob : Enemy
     protected virtual void Attack()
     {
 
+    }
+    public void Slow()
+    {
+        if(moveSpeed > 2)
+        {
+            moveSpeed -= 2;
+        }
+        else
+        {
+
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
