@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour
     Animator anim;
     SpriteRenderer spriteRenderer;
     public string currentMapName;
+    GameManager gameManager;
 
     //Move 관련 변수
     Rigidbody2D playerRigidbody;
@@ -46,6 +47,7 @@ public class PlayerControl : MonoBehaviour
     private bool isBuffcoolTime = false;
     public GameObject Energy = null;
 
+
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
@@ -57,6 +59,7 @@ public class PlayerControl : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
         playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
     //Stop Speed
     void Update()
@@ -187,6 +190,20 @@ public class PlayerControl : MonoBehaviour
             {
                 Shooter shooter = collider.GetComponent<Shooter>();
                 shooter.EnemyDamaged(playerStat.Atk);
+                Invoke("atkWait", 1.1f); // 이동불가 + 행동 활성화
+                break;
+            }
+            else if (collider.CompareTag("Infighter"))
+            {
+                Infighter infighter = collider.GetComponent<Infighter>();
+                infighter.EnemyDamaged(playerStat.Atk);
+                Invoke("atkWait", 1.1f); // 이동불가 + 행동 활성화
+                break;
+            }
+            else if (collider.CompareTag("Boss"))
+            {
+                Boss boss = collider.GetComponent<Boss>();
+                boss.EnemyDamaged(playerStat.Atk);
                 Invoke("atkWait", 1.1f); // 이동불가 + 행동 활성화
                 break;
             }
