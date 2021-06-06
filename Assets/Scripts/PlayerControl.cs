@@ -298,13 +298,8 @@ public class PlayerControl : MonoBehaviour
     void CancelBuff()
     {
         anim.SetBool("isBuff", false);
-<<<<<<< Updated upstream
-        //공격력 -10
-        //방어력 -20
-=======
         playerStat.Atk -= 10;
         playerStat.Def -= 20;
->>>>>>> Stashed changes
         Energy.SetActive(false);
         Invoke("ReturnBuff", 30f);
     }
