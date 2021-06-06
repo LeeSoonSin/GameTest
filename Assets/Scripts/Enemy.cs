@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour//MonoBehaviour
 {
     public int HP; //Ã¼·Â
     public int currentHP;
@@ -11,7 +12,13 @@ public class Enemy : MonoBehaviour
     public GameObject target;
 
     private bool dead = false;
+    GameManager gameManager;
 
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+        
+    }
     public void EnemyDamaged(int damage)
     {
         currentHP -= damage;
@@ -21,10 +28,5 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Die()
-    {
-        dead = true;
-        Debug.Log("À¸¾ÓÁê±Ý");
-        Destroy(gameObject);
-    }
+    protected abstract void Die();
 }

@@ -7,11 +7,13 @@ public class Boss : Enemy
     public Transform left;
     public Transform right;
     public Transform player;
+    GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
         HP = 700;
         currentHP = HP;
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -32,4 +34,11 @@ public class Boss : Enemy
             }
         }
     }
+    protected override void Die()
+    {
+        //gameManager.dead = true;
+        gameManager.MonsterCount[gameManager.buildIndex - 1] -= 1;
+        Destroy(gameObject);
+    }
+
 }

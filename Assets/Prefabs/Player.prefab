@@ -179,7 +179,7 @@ MonoBehaviour:
   curTime: 0
   pos: {fileID: 1862630607}
   boxSize: {x: 0.2, y: 1}
-  Energy: {fileID: 0}
+  Energy: {fileID: 2794051383777385583}
 --- !u!95 &534040976681221126
 Animator:
   serializedVersion: 3
@@ -214,6 +214,7 @@ MonoBehaviour:
   HP: 100
   currentHP: 100
   Atk: 10
+  FireBall: 30
   Def: 50
   Luck: 0
   Rage: 100
@@ -353,6 +354,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb4ab090db61243459621f2b63eb458e, type: 3}
+--- !u!1 &2794051383777385583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2794051385369665584, guid: cb4ab090db61243459621f2b63eb458e, type: 3}
+  m_PrefabInstance: {fileID: 1662581855}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2794051383777385576 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2794051385369665591, guid: cb4ab090db61243459621f2b63eb458e, type: 3}

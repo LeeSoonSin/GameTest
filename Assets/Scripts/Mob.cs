@@ -22,6 +22,8 @@ public class Mob : Enemy
     protected float currentTime;
     protected bool IsAttack;
 
+    GameManager gameManager;
+
     void Awake()
     {
         circleCollider2D = transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
@@ -32,7 +34,9 @@ public class Mob : Enemy
         //target = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(ChangeMovement());
         IsTracing = false;
+        gameManager = FindObjectOfType<GameManager>();
     }
+
     void FixedUpdate()
     {
         Move();
@@ -82,6 +86,7 @@ public class Mob : Enemy
 
     protected virtual void Attack()
     {
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -101,5 +106,11 @@ public class Mob : Enemy
             IsTracing = false;
             StartCoroutine(ChangeMovement());
         }
+    }
+    protected override void Die()
+    {
+        //gameManager.dead = true;
+        gameManager.MonsterCount[gameManager.buildIndex - gameManager.RoundNumber] -= 1;
+        Destroy(gameObject);
     }
 }
