@@ -7,6 +7,7 @@ public class PlayerStat : MonoBehaviour
     public int HP = 100; //체력
     public int currentHP; //현재 체력
     public int Atk; //공격력
+    public int FireBall; //스킬
     public int Def; //방어력
     public int Luck; //운
     public int Rage = 50; //분노게이지

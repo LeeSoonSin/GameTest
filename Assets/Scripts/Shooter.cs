@@ -6,6 +6,7 @@ public class Shooter : Mob
 {
     public GameObject projectiles;
     public Transform pos;
+    GameManager gameManager;
     
     protected override void Start()
     {
@@ -15,6 +16,7 @@ public class Shooter : Mob
         Atk = 20;
         circleCollider2D.radius = 5f;
         Distance = 3f;
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     protected override void Attack()
@@ -33,6 +35,12 @@ public class Shooter : Mob
         
         currentTime -= Time.deltaTime;
     }
+    protected override void Die()
+    {
+        Debug.Log("µµ¿ò");
+        //gameManager.dead = true;
+        gameManager.MonsterCount[gameManager.buildIndex - gameManager.RoundNumber] -= 1;
+        Destroy(gameObject);
+    }
 
-    
 }
