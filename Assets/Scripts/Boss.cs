@@ -8,6 +8,7 @@ public class Boss : Enemy
     public GameObject right;
     public GameObject pricklePos;
     public GameObject Warning;
+    GameManager gameManager;
 
     private float ReadySpeed = 3f;
     private float AttackSpeed;
@@ -21,6 +22,7 @@ public class Boss : Enemy
     {
         HP = 700;
         currentHP = HP;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -225,4 +227,11 @@ public class Boss : Enemy
             yield return null;
         }
     } //가시 원위치
+
+    protected override void Die()
+    {
+        //gameManager.dead = true;
+        gameManager.MonsterCount[gameManager.buildIndex - 1] -= 1;
+        Destroy(gameObject);
+    }
 }
