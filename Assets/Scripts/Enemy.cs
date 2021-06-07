@@ -12,13 +12,7 @@ public abstract class Enemy : MonoBehaviour//MonoBehaviour
     public GameObject target;
 
     private bool dead = false;
-    GameManager gameManager;
 
-    private void Start()
-    {
-        gameManager = FindObjectOfType<GameManager>();
-        
-    }
     public void EnemyDamaged(int damage)
     {
         currentHP -= damage;

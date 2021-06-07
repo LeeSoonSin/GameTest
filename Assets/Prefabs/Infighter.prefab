@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1546893593948452097}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: AttackPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,10 +227,11 @@ MonoBehaviour:
   currentHP: 0
   Atk: 0
   target: {fileID: 0}
-  MobRigid: {fileID: 0}
   circleCollider2D: {fileID: 9201651531631466958}
+  moveSpeed: 3
   speed: 0
   IsTracing: 0
   Distance: 0
+  IsAttack: 0
   pos: {fileID: 1546893593948452097}
-  boxSize: {x: 3, y: 1}
+  boxSize: {x: 3, y: 0.5}

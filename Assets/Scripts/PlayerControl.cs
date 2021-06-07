@@ -8,7 +8,6 @@ public class PlayerControl : MonoBehaviour
     Animator anim;
     SpriteRenderer spriteRenderer;
     public string currentMapName;
-    GameManager gameManager;
 
     //Move 관련 변수
     Rigidbody2D playerRigidbody;
@@ -59,7 +58,6 @@ public class PlayerControl : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
         playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
     //Stop Speed
     void Update()
