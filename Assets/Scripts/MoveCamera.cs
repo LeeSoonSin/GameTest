@@ -31,27 +31,27 @@ public class MoveCamera : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "InGame")
         {
             center.x = 7.5f; center.y = 0f;
-            size.x = 43.5f; size.y = 15;
+            size.x = 44.5f; size.y = 15;
         }
         else if(SceneManager.GetActiveScene().name == "2Stage")
         {
-            center.x = 25f; center.y = 0f;
-            size.x = 80f; size.y = 15;
+            center.x = 26f; center.y = 0f;
+            size.x = 83f; size.y = 15;
         }
         else if (SceneManager.GetActiveScene().name == "3Stage")
         {
             center.x = 19; center.y = 0f;
-            size.x = 50; size.y = 45;
+            size.x = 67; size.y = 15;
         }
         else if (SceneManager.GetActiveScene().name == "4Stage")
         {
-            center.x = 9.5f; center.y = -8;
-            size.x = 50; size.y = 45;
+            center.x = 8f; center.y = -8;
+            size.x = 47; size.y = 45;
         }
         else if (SceneManager.GetActiveScene().name == "5Stage")
         {
-            center.x = 28.5f; center.y = 7f;
-            size.x = 87; size.y = 30;
+            center.x = 29f; center.y = 7f;
+            size.x = 87.5f; size.y = 30;
         }
     }
     // Update is called once per frame

@@ -46,5 +46,6 @@ MonoBehaviour:
   MonsterCount: 010000000500000007000000090000000b000000
   isDoor: 0
   isRound: 0
-  RoundNumber: 1
+  RoundNumber: 0
   buildIndex: 0
+  potal: {fileID: 0}
