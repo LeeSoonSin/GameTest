@@ -96,11 +96,11 @@ public class PlayerControl : MonoBehaviour
         {
             Debug.DrawRay(transform.position, Vector3.down, new Color(0, 1, 0));
 
-            RaycastHit2D rayHit = Physics2D.Raycast(transform.position, Vector3.down, 1, LayerMask.GetMask("Wall"));//1은 레이의 길이임
+            RaycastHit2D rayHit = Physics2D.Raycast(transform.position, Vector3.down, 3, LayerMask.GetMask("Wall"));//1은 레이의 길이임
 
             if (rayHit.collider != null) // 빔을 맞지 않았다면? 점프했을때.
             {
-                if (rayHit.distance < 100f)
+                if (rayHit.distance < 1.3f)
                 {
                     anim.SetBool("isJumping", false);
                     notActive = false;

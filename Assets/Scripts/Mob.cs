@@ -7,6 +7,7 @@ public class Mob : Enemy
 {
     Rigidbody2D MobRigid;
     public CircleCollider2D circleCollider2D;
+    SpriteRenderer spriteRenderer;
 
     [SerializeField]
     protected int moveSpeed; //¼Ó·Â
@@ -25,11 +26,13 @@ public class Mob : Enemy
     protected bool IsAttack;
 
     FoxBullet foxBullet;
+    protected bool isChange = false;
 
     void Awake()
     {
         circleCollider2D = transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
         MobRigid = gameObject.GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     protected virtual void Start()
     {
@@ -37,16 +40,29 @@ public class Mob : Enemy
         IsTracing = false;
         foxBullet = GetComponent<FoxBullet>();
     }
-
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Move();
+        SpeedMove();
+        MoveAni();
+        if (speed > 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if(speed < 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+    }
+
+    protected virtual void SpeedMove()
+    {
         //ÇÃ·§Æû Ã¼Å©
         if (speed != 0)
         {
             Vector2 front = new Vector2(MobRigid.position.x + (Mathf.Abs(speed) / speed), MobRigid.position.y);
-            Debug.DrawRay(front, Vector3.down, Color.red);
-            RaycastHit2D rayHit = Physics2D.Raycast(front, Vector3.down, 1, LayerMask.GetMask("Wall"));
+            Debug.DrawRay(front, Vector3.down * 2, Color.red);
+            RaycastHit2D rayHit = Physics2D.Raycast(front, Vector3.down, 2, LayerMask.GetMask("Wall"));
             if (rayHit.collider == null)
             {
                 speed *= -1;
@@ -54,7 +70,7 @@ public class Mob : Enemy
         }
     }
 
-    IEnumerator ChangeMovement()
+    protected IEnumerator ChangeMovement()
     {
         speed = Random.Range(-1, 2)*moveSpeed;
         float randomTime = Random.Range(2f, 4f);
@@ -67,6 +83,7 @@ public class Mob : Enemy
     {
         if (IsTracing)
         {
+            StopCoroutine(ChangeMovement());
             Vector3 playerPos = target.transform.position;
 
             if (transform.position.x - playerPos.x > Distance )
@@ -86,7 +103,17 @@ public class Mob : Enemy
 
         MobRigid.velocity = new Vector2(speed, MobRigid.velocity.y);
     }
-
+    protected virtual void MoveAni()
+    {
+        //if (speed != 0)
+        //{
+        //    anim.SetBool("isWalk", true);
+        //}
+        //else
+        //{
+        //    anim.SetBool("isWalk", false);
+        //}
+    }
     protected virtual void Attack()
     {
     }
