@@ -100,7 +100,7 @@ public class PlayerControl : MonoBehaviour
 
             if (rayHit.collider != null) // 빔을 맞지 않았다면? 점프했을때.
             {
-                if (rayHit.distance < 0.5f)
+                if (rayHit.distance < 100f)
                 {
                     anim.SetBool("isJumping", false);
                     notActive = false;
