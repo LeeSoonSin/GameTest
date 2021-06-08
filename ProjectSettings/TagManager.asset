@@ -20,7 +20,7 @@ TagManager:
   - Player
   - Enemy
   - Enemy_Trace
-  - 
+  - Door
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: DoorPortal
+    uniqueID: 2087123573
     locked: 0

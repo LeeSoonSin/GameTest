@@ -41,6 +41,10 @@ public class PlayerControl : MonoBehaviour
     private float GuardDelay = 5f;
     private float HoldGuardTime = 1f; //가드 유지 시간
     private float GuardCurTime;
+    public GameObject blueHalfGuard = null;
+    public GameObject redHalfGuard = null;
+    public GameObject blueGuard = null;
+    public GameObject redGuard = null;
 
     //Buff 관련 변수
     private bool isBuffcoolTime = false;
@@ -242,11 +246,28 @@ public class PlayerControl : MonoBehaviour
         {
             if(!IsGuard)
             {
+                anim.SetBool("isGuard", true);
                 GuardCurTime = HoldGuardTime;
                 IsGuard = true;
                 IsDamaged = false;
                 notActive = true;
                 maxSpeed = 0f;
+                if(transanimal == false)//방어강화 스킬 얻지 못했을때 조건 추가하기.
+                {
+                    redHalfGuard.SetActive(true);
+                }
+                else if(transanimal)//방어강화 스킬 얻지 못했을때 조건 추가하기.
+                {
+                    blueHalfGuard.SetActive(true);
+                }
+                /*else if (transanimal && 방어 강화 스킬 얻었을때) 
+                {
+                    blueGuard.SetActive(true);
+                }
+                else if (transanimal == false && 방어 강화 스킬 얻었을때) 
+                {
+                    redGuard.SetActive(true);
+                }*/
                 StartCoroutine(GuardCoroutine());
             }
         }
@@ -259,6 +280,9 @@ public class PlayerControl : MonoBehaviour
                     IsDamaged = true;
                     notActive = false;
                     maxSpeed = 5f;
+                    anim.SetBool("isGuard", false);
+                    redHalfGuard.SetActive(false);
+                    blueHalfGuard.SetActive(false);
                 }
                 GuardCurTime -= Time.deltaTime;
             }
@@ -269,6 +293,9 @@ public class PlayerControl : MonoBehaviour
     {
         yield return new WaitForSeconds(GuardDelay);
         IsGuard = false;
+        redHalfGuard.SetActive(false);
+        blueHalfGuard.SetActive(false);
+        anim.SetBool("isGuard", false);
     }
     private void Animation()
     {

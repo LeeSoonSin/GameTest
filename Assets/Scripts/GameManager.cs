@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public bool isRound = false; // 1스테이지 2스테이지 3스테이지마다 이것을 통해 변경함.
     public int RoundNumber;
     public int buildIndex;
+    //public GameObject potal;
 
     private void Awake()
     {
@@ -34,10 +35,12 @@ public class GameManager : MonoBehaviour
         if (MonsterCount[buildIndex - RoundNumber] == 0) // isround 배열만들기
         {
             isDoor = true;
+            //potal.gameObject.SetActive(true);
         }
         else
         {
             isDoor = false;
+            //potal.gameObject.SetActive(false);
         }
     }
 }

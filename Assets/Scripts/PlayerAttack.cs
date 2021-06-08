@@ -30,7 +30,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (curtime <= 0)
         {
-            if (Input.GetKey(KeyCode.Q) && playerControl.notActive == false)
+            if (Input.GetKey(KeyCode.Q) && playerControl.notActive == false && playerControl.transanimal == false)
             {
                 anim.SetBool("isArrow", true);
                 Invoke("InstaniBullet", 1.6f);
@@ -43,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (curtime <= 0)
         {
-            if (Input.GetKey(KeyCode.E) && playerControl.notActive == false)
+            if (Input.GetKey(KeyCode.E) && playerControl.notActive == false && playerControl.transanimal == false)
             {
                 anim.SetBool("isFoxfire", true);
                 Invoke("InstaniFoxFireball", 1.6f);

@@ -24,6 +24,8 @@ public class Mob : Enemy
     [SerializeField]
     protected bool IsAttack;
 
+    FoxBullet foxBullet;
+
     void Awake()
     {
         circleCollider2D = transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
@@ -33,6 +35,7 @@ public class Mob : Enemy
     {
         StartCoroutine(ChangeMovement());
         IsTracing = false;
+        foxBullet = GetComponent<FoxBullet>();
     }
 
     void FixedUpdate()
@@ -93,6 +96,8 @@ public class Mob : Enemy
         if(moveSpeed > 2)
         {
             moveSpeed -= 2;
+            foxBullet.isFoxBallHit = true;
+            Debug.Log("맞았어요");
         }
     }
 
