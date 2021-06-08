@@ -8,7 +8,6 @@ public class PlayerControl : MonoBehaviour
     Animator anim;
     SpriteRenderer spriteRenderer;
     public string currentMapName;
-    GameManager gameManager;
 
     //Move 관련 변수
     Rigidbody2D playerRigidbody;
@@ -59,7 +58,6 @@ public class PlayerControl : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
         playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
     //Stop Speed
     void Update()
@@ -157,16 +155,6 @@ public class PlayerControl : MonoBehaviour
                 IsAttack = true;
                 maxSpeed = 0;
                 curTime = coolTime;
-                //Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
-                //foreach (Collider2D collider in collider2Ds)
-                //{
-                //    if (collider.CompareTag("Shooter"))
-                //    {
-                //        Shooter shooter = collider.GetComponent<Shooter>();
-                //        shooter.EnemyDamaged(playerStat.Atk);
-                //        break;
-                //    }
-                //}
                 AttackRange();
                 Invoke("AttackRange", 0.5f);
 
@@ -300,7 +288,7 @@ public class PlayerControl : MonoBehaviour
         {
             isBuffcoolTime = true;
             anim.SetBool("isBuff", true);
-            //공격력 +10
+            playerStat.Atk += 10;
             Invoke("CancelBuff", 60f);
             Energy.SetActive(true);
         }
@@ -308,13 +296,14 @@ public class PlayerControl : MonoBehaviour
     void CancelBuff()
     {
         anim.SetBool("isBuff", false);
-        //방어력 -20
+        playerStat.Atk -= 10;
+        playerStat.Def -= 20;
         Energy.SetActive(false);
         Invoke("ReturnBuff", 30f);
     }
     void ReturnBuff()
     {
-        //방어력 + 20
+        playerStat.Def += 20;
         isBuffcoolTime = false;
     }
     private void atkWait()
@@ -329,10 +318,19 @@ public class PlayerControl : MonoBehaviour
         {
             notActive = true;
             maxSpeed = 0f;
-            //피 1초마다 5씩 회복하게 하기.
+            StartCoroutine(Heal());
             GameObject healing = Instantiate(Resources.Load<GameObject>("healing"), transform.position, Quaternion.identity);
-            Destroy(healing, 4);
-            Invoke("atkWait", 4);
+            Destroy(healing, 5f);
+            Invoke("atkWait", 5f);
         }
+    }
+    IEnumerator Heal()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            playerStat.currentHP += 5;
+            yield return new WaitForSeconds(1f);
+        }
+        yield return null;
     }
 }

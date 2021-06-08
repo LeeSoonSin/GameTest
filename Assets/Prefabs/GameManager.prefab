@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc28071fd75e8e4488d16370f998cd1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterCount: 02000000020000001400000014000000
+  MonsterCount: 010000000500000007000000090000000b000000
   isDoor: 0
   isRound: 0
   RoundNumber: 1

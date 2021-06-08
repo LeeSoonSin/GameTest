@@ -33,6 +33,7 @@ public class FoxBullet : MonoBehaviour
                 Debug.Log("슈터 명중!");
                 GameObject boom = Instantiate(Resources.Load<GameObject>("foxBoom"), transform.position, Quaternion.identity); //프리팹에 있는거 갖고 오는 코드;
                 Destroy(boom, 1);
+                shooter.Slow();
             }
             else if (ray.collider.CompareTag("Infighter"))
             {
@@ -40,7 +41,9 @@ public class FoxBullet : MonoBehaviour
                 Debug.Log("인파이터 명중!");
                 GameObject boom = Instantiate(Resources.Load<GameObject>("foxBoom"), transform.position, Quaternion.identity); //프리팹에 있는거 갖고 오는 코드;
                 Destroy(boom, 1);
+                infighter.Slow();
             }
+
             Destroy(gameObject);
         }
         if (transform.rotation.y == 0)

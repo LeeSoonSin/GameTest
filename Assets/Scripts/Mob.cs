@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Mob : Enemy
 {
-    public Rigidbody2D MobRigid;
+    Rigidbody2D MobRigid;
     public CircleCollider2D circleCollider2D;
 
-    protected int moveSpeed = 3; //속력
+    [SerializeField]
+    protected int moveSpeed; //속력
     [SerializeField]
     protected int speed; //변속
 
@@ -20,34 +21,33 @@ public class Mob : Enemy
 
     protected float coolTime = 2f;//공격 쿨타임
     protected float currentTime;
+    [SerializeField]
     protected bool IsAttack;
-
-    GameManager gameManager;
 
     void Awake()
     {
         circleCollider2D = transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
-        MobRigid = GetComponent<Rigidbody2D>();
+        MobRigid = gameObject.GetComponent<Rigidbody2D>();
     }
     protected virtual void Start()
     {
-        //target = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(ChangeMovement());
         IsTracing = false;
-        gameManager = FindObjectOfType<GameManager>();
     }
 
     void FixedUpdate()
     {
         Move();
-
         //플랫폼 체크
-        Vector2 front = new Vector2(MobRigid.position.x + speed, MobRigid.position.y);
-        Debug.DrawRay(front, Vector3.down, Color.red);
-        RaycastHit2D rayHit = Physics2D.Raycast(front, Vector3.down, 1, LayerMask.GetMask("Wall"));
-        if(rayHit.collider == null)
+        if (speed != 0)
         {
-            speed *= -1;
+            Vector2 front = new Vector2(MobRigid.position.x + (Mathf.Abs(speed) / speed), MobRigid.position.y);
+            Debug.DrawRay(front, Vector3.down, Color.red);
+            RaycastHit2D rayHit = Physics2D.Raycast(front, Vector3.down, 1, LayerMask.GetMask("Wall"));
+            if (rayHit.collider == null)
+            {
+                speed *= -1;
+            }
         }
     }
 
@@ -86,7 +86,14 @@ public class Mob : Enemy
 
     protected virtual void Attack()
     {
+    }
 
+    public void Slow()
+    {
+        if(moveSpeed > 2)
+        {
+            moveSpeed -= 2;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -109,8 +116,7 @@ public class Mob : Enemy
     }
     protected override void Die()
     {
-        //gameManager.dead = true;
-        gameManager.MonsterCount[gameManager.buildIndex - gameManager.RoundNumber] -= 1;
+        GameManager.instance.MonsterCount[GameManager.instance.buildIndex - GameManager.instance.RoundNumber] -= 1;
         Destroy(gameObject);
     }
 }
