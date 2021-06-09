@@ -9,7 +9,6 @@ public class Shooter : Mob
     Animator anim;
 
     Rigidbody2D shooterRigid;
-    SpriteRenderer spriteRenderer;
 
     protected override void Start()
     {
@@ -22,7 +21,6 @@ public class Shooter : Mob
         Distance = 3f;
         anim = GetComponent<Animator>();
         shooterRigid = gameObject.GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     protected override void Move()
     {

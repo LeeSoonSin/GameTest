@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
         cardStep = 0;
-    }
+    }//카드 초기화 및 랜덤 선택
 
     public void OnClickButton() //카드 적용
     {
