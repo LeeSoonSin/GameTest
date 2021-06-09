@@ -6,9 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance = null;
-
     public static GameManager instance { get { return _instance; } }
-
 
     public int[] MonsterCount = { 1, 5, 7, 9, 11 };
     public bool isDoor = false;
@@ -17,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int buildIndex;
     //public GameObject potal;
 
+    public bool[] SelectedCard = new bool[9]; //고른 카드
     private void Awake()
     {
         _instance = this;
@@ -24,9 +23,15 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        for(int i = 0; i < 9; i++)
+        {
+            SelectedCard[i] = false;
+        }
         RoundNumber = 1;
         DontDestroyOnLoad(this.gameObject);
         buildIndex = SceneManager.GetActiveScene().buildIndex;
+
+        
     }
 
     // Update is called once per frame
