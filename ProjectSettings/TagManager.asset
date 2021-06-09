@@ -10,6 +10,7 @@ TagManager:
   - Shooter
   - Infighter
   - Boss
+  - Bound
   layers:
   - Default
   - TransparentFX

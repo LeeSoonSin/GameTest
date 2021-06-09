@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MoveCamera : MonoBehaviour
 {
-    static public MoveCamera instance;
 
-    public GameObject target;
+    GameObject target;
     public float moveSpeed;
     private Vector3 targetPosition;
 
@@ -21,20 +20,9 @@ public class MoveCamera : MonoBehaviour
     private float halfWidth;
     private float halfHeight;
 
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(this.gameObject);
-            instance = this;
-        }
-    }
     private void Start()
     {
+        target = GameObject.FindGameObjectWithTag("Player");
         theCamera = GetComponent<Camera>();
         minBound = bound.bounds.min;
         maxBound = bound.bounds.max;

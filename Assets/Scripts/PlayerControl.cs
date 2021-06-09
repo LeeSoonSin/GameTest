@@ -266,23 +266,23 @@ public class PlayerControl : MonoBehaviour
                 
                 if (transanimal == false && GameManager.instance.SelectedCard[4])
                 {
-                    playerStat.GuardRange = 7;
+                    playerStat.GuardRange = 20;
                     redGuard.SetActive(true);
                 }
                 else if (transanimal && GameManager.instance.SelectedCard[4])
                 {
-                    playerStat.GuardRange = 20;
+                    playerStat.GuardRange = 7;
                     blueGuard.SetActive(true);
                 }
                 else if (transanimal == false)//방어강화 스킬 얻지 못했을때 조건 추가하기.
                 {
-                    playerStat.GuardRange = 5;
-                    redHalfGuard.SetActive(true);
+                    playerStat.GuardRange = 10;
+                    redGuard.SetActive(true);
                 }
                 else if (transanimal)//방어강화 스킬 얻지 못했을때 조건 추가하기.
                 {
-                    playerStat.GuardRange = 10;
-                    blueHalfGuard.SetActive(true);
+                    playerStat.GuardRange = 5;
+                    blueGuard.SetActive(true);
                 }
                 
                 StartCoroutine(GuardCoroutine());
