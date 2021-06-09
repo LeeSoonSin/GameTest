@@ -9,7 +9,6 @@ public class Infighter : Mob
     Animator anim;
 
     Rigidbody2D infighterRigid;
-    SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -24,7 +23,6 @@ public class Infighter : Mob
         Distance = 1f;
         anim = GetComponent<Animator>();
         infighterRigid = gameObject.GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     protected override void Move()
     {

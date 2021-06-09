@@ -14,6 +14,12 @@ public class Boss : Enemy
 
     [SerializeField]
     private bool isAttack = false;
+
+    [SerializeField]
+    private bool isHit = false;
+
+    [SerializeField]
+    private bool isDead = false;
     private int pattern;
 
     // Start is called before the first frame update
@@ -21,12 +27,16 @@ public class Boss : Enemy
     {
         HP = 700;
         currentHP = HP;
+        target = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Event();
+        if(!isDead)
+        {
+            Event();
+        }
     }
 
     private void Event()
@@ -54,6 +64,7 @@ public class Boss : Enemy
             }
             else if(pattern == 1)
             {
+                Atk = 15;
                 AttackSpeed = 25f;
                 Vector2 pos_l = new Vector2(left.transform.position.x, left.transform.position.y);
                 Vector2 pos_r = new Vector2(right.transform.position.x, right.transform.position.y);
@@ -63,6 +74,7 @@ public class Boss : Enemy
             }
             else if(pattern == 2 || pattern == 3)
             {
+                Atk = 10;
                 AttackSpeed = 25f;
                 Vector2 pos_l = new Vector2(left.transform.position.x, left.transform.position.y);
                 Vector2 pos_r = new Vector2(right.transform.position.x, right.transform.position.y);
@@ -82,6 +94,7 @@ public class Boss : Enemy
             }
             else if(pattern == 5)
             {
+                Atk = 25;
                 AttackSpeed = 25f;
                 Warning.transform.position = new Vector2(target.transform.position.x, Warning.transform.position.y);
                 pricklePos.transform.position = new Vector2(target.transform.position.x, pricklePos.transform.position.y);
@@ -112,6 +125,7 @@ public class Boss : Enemy
     {
         float distance = transform.position.x - fist.transform.position.x;
         Vector2 vector2 = new Vector2(fist.transform.position.x + distance * 2, fist.transform.position.y);
+        isHit = true;
         while (true)
         {
             fist.transform.position = Vector2.MoveTowards(fist.transform.position, vector2, AttackSpeed * Time.deltaTime);
@@ -158,7 +172,8 @@ public class Boss : Enemy
 
     IEnumerator VerticalAttack(Vector2 pos, GameObject fist) //수직 공격
     {
-        Vector2 vector2 = new Vector2(fist.transform.position.x, 0.1f);
+        Vector2 vector2 = new Vector2(fist.transform.position.x, -0.3f);
+        isHit = true;
         while (true)
         {
             fist.transform.position = Vector2.MoveTowards(fist.transform.position, vector2, AttackSpeed * Time.deltaTime);
@@ -173,6 +188,7 @@ public class Boss : Enemy
 
     IEnumerator Return(Vector2 pos, GameObject fist)
     {
+        isHit = false;
         while (true)
         {
             fist.transform.position = Vector2.Lerp(fist.transform.position, pos, ReadySpeed * Time.deltaTime);
@@ -194,13 +210,13 @@ public class Boss : Enemy
         yield return new WaitForSeconds(1f);
         Warning.SetActive(false);
         prickle.SetActive(true);
-
-        while(true)
+        isHit = true;
+        while (true)
         {
             prickle.transform.position = Vector2.MoveTowards(prickle.transform.position, Warning.transform.position, AttackSpeed * Time.deltaTime);
             if(Warning.transform.position.y - prickle.transform.position.y < float.Epsilon + 0.1f)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
                 StartCoroutine(PrickleReturn(pos, prickle));
                 break;
             }
@@ -210,6 +226,7 @@ public class Boss : Enemy
 
     IEnumerator PrickleReturn(Vector2 pos, GameObject prickle)
     {
+        isHit = false;
         while (true)
         {
             prickle.transform.position = Vector2.MoveTowards(prickle.transform.position, pos, AttackSpeed * Time.deltaTime);
@@ -226,15 +243,35 @@ public class Boss : Enemy
         }
     } //가시 원위치
 
-    protected override void Die()
-    {
-        //gameManager.dead = true;
-        GameManager.instance.MonsterCount[GameManager.instance.buildIndex - 1] -= 1;
-        Destroy(gameObject);
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            if(isHit)
+            {
+                Debug.Log("1");
+                PlayerStat playerStat = collision.GetComponent<PlayerStat>();
+                playerStat.PlayerDamaged(Atk);
+            }
+            
+        }
+    }
+    protected override void Die()
+    {
+        isDead = true;
+        GameManager.instance.MonsterCount[GameManager.instance.buildIndex - 1] -= 1;
+        StartCoroutine(DeadScene());
+    }
+
+    IEnumerator DeadScene()
+    {
+        Color color = gameObject.GetComponent<Color>();
+        while(color.a > 0f)
+        {
+            color.a -= Time.deltaTime;
+            yield return null;
+        }
+        Destroy(gameObject);
     }
 }
