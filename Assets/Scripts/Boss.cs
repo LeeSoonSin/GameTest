@@ -232,4 +232,9 @@ public class Boss : Enemy
         GameManager.instance.MonsterCount[GameManager.instance.buildIndex - 1] -= 1;
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
 }

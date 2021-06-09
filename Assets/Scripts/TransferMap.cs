@@ -19,12 +19,21 @@ public class TransferMap : MonoBehaviour
         {
             if (GameManager.instance.MonsterCount[GameManager.instance.buildIndex -1] == 0 && GameManager.instance.isDoor == true)//Input.GetKeyDown(KeyCode.UpArrow)
             {
-                thePlayer.currentMapName = transferMapName;
-                SceneManager.LoadScene(transferMapName);
-                GameManager.instance.isDoor = false;
-                GameManager.instance.isRound = true;
-                GameManager.instance.buildIndex += 1;
+                StartCoroutine(UIManager.instance.SelectCard());
             }
+        }
+    }
+
+    public void NextStage()
+    {
+        if (UIManager.instance.IsSelect)
+        {
+            thePlayer.currentMapName = transferMapName;
+            SceneManager.LoadScene(transferMapName);
+            GameManager.instance.isDoor = false;
+            GameManager.instance.isRound = true;
+            GameManager.instance.buildIndex += 1;
+            UIManager.instance.IsSelect = false;
         }
     }
 }

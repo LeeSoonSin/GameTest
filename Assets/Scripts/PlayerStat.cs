@@ -9,7 +9,6 @@ public class PlayerStat : MonoBehaviour
     public int Atk; //공격력
     public int FireBall; //스킬
     public int Def = 50; //방어력
-    public int Luck; //운
     public int Rage = 50; //분노게이지
     public int currentRage; //현재 분노게이지
 
