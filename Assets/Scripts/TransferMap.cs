@@ -15,9 +15,9 @@ public class TransferMap : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name == "Player") // 닿은 것의 게임오브젝트 이름이 플레이어라면
+        if(collision.gameObject.name == "Player2") // 닿은 것의 게임오브젝트 이름이 플레이어라면
         {
-            if (GameManager.instance.MonsterCount[GameManager.instance.buildIndex -1] == 0 && GameManager.instance.isDoor == true)//Input.GetKeyDown(KeyCode.UpArrow)
+            if (GameManager.instance.MonsterCount[GameManager.instance.buildIndex -2] == 0 && GameManager.instance.isDoor == true)//Input.GetKeyDown(KeyCode.UpArrow)
             {
                 StartCoroutine(UIManager.instance.SelectCard());
             }

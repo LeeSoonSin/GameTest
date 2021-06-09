@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 //using System.Security.Cryptography;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class FoxBullet : MonoBehaviour
@@ -18,8 +19,8 @@ public class FoxBullet : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, 2f);
-        shooter = GameObject.Find("Shooter").GetComponent<Shooter>();
-        infighter = GameObject.Find("infighter").GetComponent<Infighter>();
+        shooter =GetComponent<Shooter>();
+        infighter = GetComponent<Infighter>();
     }
 
     // Update is called once per frame

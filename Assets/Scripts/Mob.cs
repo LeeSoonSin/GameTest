@@ -8,6 +8,7 @@ public class Mob : Enemy
     Rigidbody2D MobRigid;
     public CircleCollider2D circleCollider2D;
     SpriteRenderer spriteRenderer;
+    public GameObject DeBuff;
 
     [SerializeField]
     protected int moveSpeed; //속력
@@ -36,6 +37,7 @@ public class Mob : Enemy
     }
     protected virtual void Start()
     {
+        DeBuff = GetComponent<GameObject>();
         StartCoroutine(ChangeMovement());
         IsTracing = false;
         foxBullet = GetComponent<FoxBullet>();
@@ -118,10 +120,11 @@ public class Mob : Enemy
     {
     }
 
-    public void Slow()
+    public virtual void Slow()
     {
         if(moveSpeed > 2)
         {
+            DeBuff.SetActive(true);
             moveSpeed -= 2;
             foxBullet.isFoxBallHit = true;
             Debug.Log("맞았어요");

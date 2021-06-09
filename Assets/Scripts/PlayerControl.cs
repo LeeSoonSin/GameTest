@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 //using System.Drawing;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -61,7 +62,7 @@ public class PlayerControl : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
+        playerStat = GameObject.Find("Player2").GetComponent<PlayerStat>();
     }
     //Stop Speed
     void Update()
