@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Boss : Enemy
 {
@@ -273,6 +274,7 @@ public class Boss : Enemy
             color.a -= Time.deltaTime;
             yield return null;
         }
+        SceneManager.LoadScene("EndStory");
         Destroy(gameObject);
     }
 }
