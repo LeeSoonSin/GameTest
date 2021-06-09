@@ -12,15 +12,10 @@ public class FoxBullet : MonoBehaviour
     public LayerMask isLayer;
     public bool isFoxBallHit  = false;
 
-    Shooter shooter;
-    Infighter infighter;
-
     // Start is called before the first frame update
     void Start()
     {
         Destroy(gameObject, 2f);
-        shooter =GetComponent<Shooter>();
-        infighter = GetComponent<Infighter>();
     }
 
     // Update is called once per frame
@@ -31,7 +26,7 @@ public class FoxBullet : MonoBehaviour
         {
             if (ray.collider.CompareTag("Shooter") && isFoxBallHit == false)
             {
-                
+                Shooter shooter = ray.collider.GetComponent<Shooter>(); 
                 //파티클이 뿜뿜Instantiate(프리팹, 포지션, 로테이션) as GameObject;
                 Debug.Log("슈터 명중!");
                 GameObject boom = Instantiate(Resources.Load<GameObject>("foxBoom"), transform.position, Quaternion.identity); //프리팹에 있는거 갖고 오는 코드;
@@ -40,7 +35,7 @@ public class FoxBullet : MonoBehaviour
             }
             else if (ray.collider.CompareTag("Infighter") && isFoxBallHit == false)
             {
-                
+                Infighter infighter = ray.collider.GetComponent<Infighter>();
                 //파티클이 뿜뿜Instantiate(프리팹, 포지션, 로테이션) as GameObject;
                 Debug.Log("인파이터 명중!");
                 GameObject boom = Instantiate(Resources.Load<GameObject>("foxBoom"), transform.position, Quaternion.identity); //프리팹에 있는거 갖고 오는 코드;

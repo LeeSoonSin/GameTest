@@ -25,38 +25,41 @@ public class PlayerAttack : MonoBehaviour
     {
         ArrowSkill();
         FoxfireSkill();
+        UIManager.instance.SetSkill(curtime, cooltime);
     }
     void ArrowSkill()
     {
-        if (curtime <= 0)
+
+        if (Input.GetKey(KeyCode.Q) && playerControl.notActive == false && playerControl.transanimal == false && GameManager.instance.SelectedCard[0])
         {
-            if (Input.GetKey(KeyCode.Q) && playerControl.notActive == false && playerControl.transanimal == false)
+            if (curtime >= cooltime)
             {
                 anim.SetBool("isArrow", true);
-                Invoke("InstaniBullet", 1.6f);
+                Invoke("InstaniBullet", 1f);
+                curtime = 0;
             }
-            curtime = cooltime;
         }
-        curtime -= Time.deltaTime;
+        curtime += Time.deltaTime;
     }
     void FoxfireSkill()
     {
-        if (curtime <= 0)
+
+        if (Input.GetKey(KeyCode.E) && playerControl.notActive == false && playerControl.transanimal == false && GameManager.instance.SelectedCard[3])
         {
-            if (Input.GetKey(KeyCode.E) && playerControl.notActive == false && playerControl.transanimal == false)
+            if (curtime >= cooltime)
             {
                 anim.SetBool("isFoxfire", true);
-                Invoke("InstaniFoxFireball", 1.6f);
+                Invoke("InstaniFoxFireball", 1f);
+                curtime = 0;
             }
-            curtime = cooltime;
         }
-        curtime -= Time.deltaTime;
+        curtime += Time.deltaTime;
     }
     private void InstaniBullet()
     {
         Instantiate(bullet, pos.position, transform.rotation);//쿼터니언은 자기그대로 고유의 값
         Invoke("Isarrowfalse", 0.5f);
-        
+
     }//밑과 연계됨
     private void InstaniFoxFireball()
     {

@@ -240,9 +240,9 @@ MonoBehaviour:
   Atk: 60
   FireBall: 30
   Def: 50
-  Luck: 0
   Rage: 100
   currentRage: 100
+  GuardRange: 0
 --- !u!70 &9187210091524609164
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   bullet: {fileID: 986646401814130089, guid: d84578e564ef793439b06aedeaf365c0, type: 3}
   foxFireball: {fileID: 986646401814130089, guid: 210fbbda8c822b547a30091323d0bcbd, type: 3}
   pos: {fileID: 9187210090282134992}
-  cooltime: 0.3
+  cooltime: 2
 --- !u!1001 &9187210089613634128
 PrefabInstance:
   m_ObjectHideFlags: 0

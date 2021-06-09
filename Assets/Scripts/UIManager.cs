@@ -8,7 +8,20 @@ public class UIManager : MonoBehaviour
 {
     private static UIManager _instance = null;
     public static UIManager instance { get { return _instance; } }
+    // 스테이터스
+    public Image hpbar;
+    public Image RageBar;
+    public Image AttackImage;
+    public Image GuardImage;
+    public Image FireImage;
+    public Image HealImage;
+    public Image FoxFireImage;
+    public Image BuffImage;
 
+    public Sprite unTransAttack;
+    public Sprite TransAttack;
+    public Sprite unTransGuard;
+    public Sprite TransGuard;
     //검은 화면
     public GameObject BackGround;
 
@@ -38,6 +51,64 @@ public class UIManager : MonoBehaviour
         BackGround.SetActive(false);
     }
 
+    public void SetHP(int curHP, int HP)
+    {
+        hpbar.fillAmount = (float)curHP / HP;
+    }
+
+    public void SetRage(int curRage, int Rage)
+    {
+        RageBar.fillAmount = (float)curRage / Rage;
+    }
+
+    public void SetAttackDelay(float curTime, float coolTime)
+    {
+        AttackImage.fillAmount = curTime / coolTime;
+    }
+
+    public void SetSkill(float curTime, float coolTime)
+    {
+        if(GameManager.instance.SelectedCard[0])
+        {
+            FireImage.gameObject.SetActive(true);
+            FireImage.fillAmount = curTime / coolTime;
+        }
+        else
+        {
+            FireImage.gameObject.SetActive(false);
+        }
+
+        if (GameManager.instance.SelectedCard[3])
+        {
+            FoxFireImage.gameObject.SetActive(true);
+            FoxFireImage.fillAmount = curTime / coolTime;
+        }
+        else
+        {
+            FoxFireImage.gameObject.SetActive(false);
+        }
+    }
+
+    public void SetBuff()
+    {
+        if (GameManager.instance.SelectedCard[1])
+        {
+            HealImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            HealImage.gameObject.SetActive(false);
+        }
+
+        if (GameManager.instance.SelectedCard[2])
+        {
+            BuffImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            BuffImage.gameObject.SetActive(false);
+        }
+    }
     public IEnumerator SelectCard()
     {
         CardUI.SetActive(true);

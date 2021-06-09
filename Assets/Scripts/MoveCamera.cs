@@ -5,67 +5,54 @@ using UnityEngine.SceneManagement;
 
 public class MoveCamera : MonoBehaviour
 {
-    public Transform target;
+    static public MoveCamera instance;
 
+    public GameObject target;
+    public float moveSpeed;
+    private Vector3 targetPosition;
 
-    public Vector2 center;
-    public Vector2 size;
+    public BoxCollider2D bound;
 
-    float height;
-    float width;
-    void Start()
+    private Vector3 minBound;
+    private Vector3 maxBound;
+
+    private Camera theCamera;
+
+    private float halfWidth;
+    private float halfHeight;
+
+    private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
-        height = Camera.main.orthographicSize;
-        width = height * Screen.width / Screen.height;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(center, size);
-    }
-
-    private void Update()
-    {
-        if(SceneManager.GetActiveScene().name == "InGame")
+        if (instance != null)
         {
-            center.x = 7.5f; center.y = 0f;
-            size.x = 44.5f; size.y = 15;
+            Destroy(this.gameObject);
         }
-        else if(SceneManager.GetActiveScene().name == "2Stage")
+        else
         {
-            center.x = 26f; center.y = 0f;
-            size.x = 83f; size.y = 15;
-        }
-        else if (SceneManager.GetActiveScene().name == "3Stage")
-        {
-            center.x = 19; center.y = 0f;
-            size.x = 67; size.y = 15;
-        }
-        else if (SceneManager.GetActiveScene().name == "4Stage")
-        {
-            center.x = 8f; center.y = -8;
-            size.x = 47; size.y = 45;
-        }
-        else if (SceneManager.GetActiveScene().name == "5Stage")
-        {
-            center.x = 29f; center.y = 7f;
-            size.x = 87.5f; size.y = 30;
+            DontDestroyOnLoad(this.gameObject);
+            instance = this;
         }
     }
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Start()
     {
-        Vector3 pos = new Vector3(target.position.x, target.position.y + 1.5f, target.position.z);
-        //transform.position = new Vector3(target.position.x, target.position.y, -10f);
-        transform.position = Vector3.Lerp(transform.position, pos, 0.25f);
-        float lx = size.x * 0.5f - width;
-        float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);
+        theCamera = GetComponent<Camera>();
+        minBound = bound.bounds.min;
+        maxBound = bound.bounds.max;
+        halfHeight = theCamera.orthographicSize;
+        halfWidth = halfHeight * Screen.width / Screen.height;
+    }
 
-        float ly = size.y * 0.5f - height;
-        float clampY = Mathf.Clamp(transform.position.y, -ly + center.y, ly + center.y);
+    private void LateUpdate()
+    {
+        if(target.gameObject != null)
+        {
+            targetPosition.Set(target.transform.position.x, target.transform.position.y, this.transform.position.z);
+            this.transform.position = Vector3.Lerp(this.transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-        transform.position = new Vector3(clampX, clampY, -10f);
+            float clampedX = Mathf.Clamp(this.transform.position.x, minBound.x + halfWidth, maxBound.x - halfWidth);
+            float clampedY = Mathf.Clamp(this.transform.position.y, minBound.y + halfHeight, maxBound.y - halfHeight);
+
+            this.transform.position = new Vector3(clampedX, clampedY, transform.position.z);
+        }
     }
 }

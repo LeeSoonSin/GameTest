@@ -78,6 +78,8 @@ public class PlayerControl : MonoBehaviour
         Animation();
         BuffSkill();
         HealingSkill();
+        Trans();
+        UIManager.instance.SetBuff();
     }
     private void OnDrawGizmos()
     {
@@ -153,13 +155,13 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (curTime <= 0 && notActive == false)
+            if (curTime >= coolTime && notActive == false)
             {
                 
                 notActive = true;
                 IsAttack = true;
                 maxSpeed = 0;
-                curTime = coolTime;
+                curTime = 0;
                 AttackRange();
                 Invoke("AttackRange", 0.5f);
 
@@ -169,8 +171,9 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            curTime -= Time.deltaTime;
+            curTime += Time.deltaTime;
         }
+        UIManager.instance.SetAttackDelay(curTime, coolTime);
     }  //근접공격 (공격하면서 바라보는 방향으로 이동하는거 아직 구현 못함.)
 
     void AttackRange()  
@@ -253,22 +256,28 @@ public class PlayerControl : MonoBehaviour
                 IsDamaged = false;
                 notActive = true;
                 maxSpeed = 0f;
-                if(transanimal == false)//방어강화 스킬 얻지 못했을때 조건 추가하기.
+                
+                if (transanimal == false && GameManager.instance.SelectedCard[4])
                 {
-                    redHalfGuard.SetActive(true);
+                    playerStat.GuardRange = 7;
+                    redGuard.SetActive(true);
                 }
-                else if(transanimal)//방어강화 스킬 얻지 못했을때 조건 추가하기.
+                else if (transanimal && GameManager.instance.SelectedCard[4])
                 {
-                    blueHalfGuard.SetActive(true);
-                }
-                /*else if (transanimal && 방어 강화 스킬 얻었을때) 
-                {
+                    playerStat.GuardRange = 20;
                     blueGuard.SetActive(true);
                 }
-                else if (transanimal == false && 방어 강화 스킬 얻었을때) 
+                else if (transanimal == false)//방어강화 스킬 얻지 못했을때 조건 추가하기.
                 {
-                    redGuard.SetActive(true);
-                }*/
+                    playerStat.GuardRange = 5;
+                    redHalfGuard.SetActive(true);
+                }
+                else if (transanimal)//방어강화 스킬 얻지 못했을때 조건 추가하기.
+                {
+                    playerStat.GuardRange = 10;
+                    blueHalfGuard.SetActive(true);
+                }
+                
                 StartCoroutine(GuardCoroutine());
             }
         }
@@ -298,6 +307,21 @@ public class PlayerControl : MonoBehaviour
         blueHalfGuard.SetActive(false);
         anim.SetBool("isGuard", false);
     }
+
+    public void Trans()
+    {
+        if (!transanimal)
+        {
+            UIManager.instance.AttackImage.sprite = UIManager.instance.TransAttack;
+            UIManager.instance.GuardImage.sprite = UIManager.instance.TransGuard;
+        }
+        else
+        {
+            UIManager.instance.AttackImage.sprite = UIManager.instance.unTransAttack;
+            UIManager.instance.GuardImage.sprite = UIManager.instance.unTransGuard;
+        }
+    }
+
     private void Animation()
     {
         //Animation
@@ -312,7 +336,7 @@ public class PlayerControl : MonoBehaviour
     } // 애니메이션 true flase 모음
     private void BuffSkill() // 스킬 버프
     {
-        if(Input.GetKeyDown(KeyCode.W) && notActive == false && isBuffcoolTime == false)
+        if(Input.GetKeyDown(KeyCode.R) && notActive == false && isBuffcoolTime == false && GameManager.instance.SelectedCard[2])
         {
             isBuffcoolTime = true;
             anim.SetBool("isBuff", true);
@@ -342,7 +366,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void HealingSkill()
     {
-        if(Input.GetKeyDown(KeyCode.R) && notActive == false)
+        if(Input.GetKeyDown(KeyCode.W) && notActive == false && GameManager.instance.SelectedCard[1])
         {
             notActive = true;
             maxSpeed = 0f;

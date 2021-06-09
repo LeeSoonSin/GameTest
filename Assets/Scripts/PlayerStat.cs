@@ -9,8 +9,9 @@ public class PlayerStat : MonoBehaviour
     public int Atk; //공격력
     public int FireBall; //스킬
     public int Def = 50; //방어력
-    public int Rage = 50; //분노게이지
+    public int Rage = 100; //분노게이지
     public int currentRage; //현재 분노게이지
+    public int GuardRange;
 
     private bool dead = false;
 
@@ -26,7 +27,7 @@ public class PlayerStat : MonoBehaviour
     {
         currentHP = HP;
         Def = 0;
-        currentRage = 100;
+        currentRage = 20;
     }
 
     public void PlayerDamaged(int damage)
@@ -36,15 +37,17 @@ public class PlayerStat : MonoBehaviour
             playerControl.IsDamaged = true;
             playerControl.notActive = false;
             playerControl.maxSpeed = 5f;
-            if(playerControl.transanimal)
+            if(damage < GuardRange)
             {
-                currentHP -= (damage - 10);
+                damage = GuardRange;
             }
-            currentHP -= (damage - 5);
+            currentHP -= (damage - GuardRange);
+            UIManager.instance.SetHP(currentHP, HP);
             return;
         }
-
+        
         currentHP -= damage + (50 - Def)*2/5;
+        UIManager.instance.SetHP(currentHP, HP);
         if (currentHP <= 0)
         {
             Die();

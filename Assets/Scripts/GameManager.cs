@@ -27,11 +27,9 @@ public class GameManager : MonoBehaviour
         {
             SelectedCard[i] = false;
         }
-        RoundNumber = 1;
+        RoundNumber = 2;
         DontDestroyOnLoad(this.gameObject);
         buildIndex = SceneManager.GetActiveScene().buildIndex;
-
-        
     }
 
     // Update is called once per frame
