@@ -141,6 +141,11 @@ public class Mob : Enemy
             IsTracing = true;
             StopCoroutine(ChangeMovement());
         }
+        if (collision.gameObject.CompareTag("Dead"))
+        {
+            Debug.Log("Á×À½..!");
+            Die();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
