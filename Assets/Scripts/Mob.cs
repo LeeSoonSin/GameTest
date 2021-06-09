@@ -9,6 +9,7 @@ public class Mob : Enemy
     public CircleCollider2D circleCollider2D;
     SpriteRenderer spriteRenderer;
     public GameObject DeBuff;
+    //PlayerStat playerStat;
 
     [SerializeField]
     protected int moveSpeed; //¼Ó·Â
@@ -26,7 +27,7 @@ public class Mob : Enemy
     [SerializeField]
     protected bool IsAttack;
 
-    FoxBullet foxBullet;
+    public FoxBullet foxBullet;
     protected bool isChange = false;
 
     void Awake()
@@ -37,6 +38,7 @@ public class Mob : Enemy
     }
     protected virtual void Start()
     {
+       // playerStat = GetComponent<PlayerStat>();
         DeBuff = GetComponent<GameObject>();
         StartCoroutine(ChangeMovement());
         IsTracing = false;
@@ -152,6 +154,7 @@ public class Mob : Enemy
     protected override void Die()
     {
         GameManager.instance.MonsterCount[GameManager.instance.buildIndex - GameManager.instance.RoundNumber] -= 1;
+        //playerStat.currentRage += 10;
         Destroy(gameObject);
     }
 }

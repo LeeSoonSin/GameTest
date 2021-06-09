@@ -3280,6 +3280,7 @@ MonoBehaviour:
   right: {fileID: 1572433539}
   pricklePos: {fileID: 1827563591}
   Warning: {fileID: 1054718464}
+  fistSfx: {fileID: 8300000, guid: 1ff051ac662ef3c49bd27156edfbaaf9, type: 3}
   isAttack: 0
   isHit: 0
   isDead: 0

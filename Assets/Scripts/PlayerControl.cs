@@ -6,6 +6,9 @@ using UnityEngine.UIElements;
 
 public class PlayerControl : MonoBehaviour
 {
+    public AudioClip clip;
+    public AudioClip atkSfx;
+    public AudioClip hitSfx;
     Animator anim;
     SpriteRenderer spriteRenderer;
     public string currentMapName;
@@ -157,7 +160,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (curTime >= coolTime && notActive == false)
             {
-                
+                SoundManager.instance.SFXPlay("AttackSfx", atkSfx);
                 notActive = true;
                 IsAttack = true;
                 maxSpeed = 0;
@@ -184,6 +187,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (collider.CompareTag("Shooter"))
             {
+                SoundManager.instance.SFXPlay("HitSfx", hitSfx);
                 Shooter shooter = collider.GetComponent<Shooter>();
                 shooter.EnemyDamaged(playerStat.Atk);
                 Invoke("atkWait", 1.1f); // 이동불가 + 행동 활성화
@@ -191,6 +195,7 @@ public class PlayerControl : MonoBehaviour
             }
             else if (collider.CompareTag("Infighter"))
             {
+                SoundManager.instance.SFXPlay("HitSfx", hitSfx);
                 Infighter infighter = collider.GetComponent<Infighter>();
                 infighter.EnemyDamaged(playerStat.Atk);
                 Invoke("atkWait", 1.1f); // 이동불가 + 행동 활성화
@@ -198,6 +203,7 @@ public class PlayerControl : MonoBehaviour
             }
             else if (collider.CompareTag("Boss"))
             {
+                SoundManager.instance.SFXPlay("HitSfx", hitSfx);
                 Boss boss = collider.GetComponent<Boss>();
                 boss.EnemyDamaged(playerStat.Atk);
                 Invoke("atkWait", 1.1f); // 이동불가 + 행동 활성화
@@ -239,6 +245,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping") && notActive == false)
         {
+            SoundManager.instance.SFXPlay("JumpSfx", clip);
             playerRigidbody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
             notActive = true;
