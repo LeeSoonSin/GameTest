@@ -37,6 +37,7 @@ IEnumerator _typing()
             }
             yield return new WaitForSeconds(0.5f);
         }
+        yield return new WaitForSeconds(1f);
         grid.SetActive(false);
         SceneManager.LoadScene("InGame");
     }

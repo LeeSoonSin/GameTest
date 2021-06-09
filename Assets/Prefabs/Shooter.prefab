@@ -388,7 +388,7 @@ MonoBehaviour:
   Atk: 0
   target: {fileID: 0}
   circleCollider2D: {fileID: 8884524982958295638}
-  DeBuff: {fileID: 7880712413681830027}
+  DeBuff: {fileID: 4295648478526783568, guid: 86d2ca12349dde34e803e9a1e99d172e, type: 3}
   moveSpeed: 0
   speed: 0
   IsTracing: 0

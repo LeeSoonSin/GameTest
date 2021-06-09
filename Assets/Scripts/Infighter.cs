@@ -98,7 +98,17 @@ public class Infighter : Mob
 
         currentTime -= Time.deltaTime;
     }
-
+    public override void Slow()
+    {
+        if (moveSpeed > 2 && foxBullet.isInfighter == true)
+        {
+            DeBuff.SetActive(true);
+            moveSpeed -= 2;
+            foxBullet.isFoxBallHit = true;
+            Debug.Log("맞았어요");
+            foxBullet.isInfighter = false;
+        }
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

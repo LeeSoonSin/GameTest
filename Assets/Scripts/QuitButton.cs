@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class QuitButton : MonoBehaviour
 {
+    public AudioClip clip;
     public void OnClickExit()
     {
+        SoundManager.instance.SFXPlay("ButtonSfx", clip);
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

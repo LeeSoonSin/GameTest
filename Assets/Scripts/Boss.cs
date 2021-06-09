@@ -8,6 +8,7 @@ public class Boss : Enemy
     public GameObject right;
     public GameObject pricklePos;
     public GameObject Warning;
+    public AudioClip fistSfx;
 
     private float ReadySpeed = 3f;
     private float AttackSpeed;
@@ -250,7 +251,7 @@ public class Boss : Enemy
         {
             if(isHit)
             {
-                Debug.Log("1");
+                SoundManager.instance.SFXPlay("BossFist", fistSfx);
                 PlayerStat playerStat = collision.GetComponent<PlayerStat>();
                 playerStat.PlayerDamaged(Atk);
             }
