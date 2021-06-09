@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RoundNumber = 1;
+        RoundNumber = 2;
         DontDestroyOnLoad(this.gameObject);
         buildIndex = SceneManager.GetActiveScene().buildIndex;
     }

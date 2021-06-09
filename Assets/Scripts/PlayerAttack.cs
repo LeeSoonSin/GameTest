@@ -16,8 +16,8 @@ public class PlayerAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
-        anim = GameObject.Find("Player").GetComponent<Animator>();
+        playerControl = GameObject.Find("Player2").GetComponent<PlayerControl>();
+        anim = GameObject.Find("Player2").GetComponent<Animator>();
     }
 
     // Update is called once per frame

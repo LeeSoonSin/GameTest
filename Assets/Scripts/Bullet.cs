@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 2f);
         //shooter = GameObject.Find("Shooter").GetComponent<Shooter>();
         //infighter = GameObject.Find("infighter").GetComponent<Infighter>();
-        playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
+        playerStat = GameObject.Find("Player2").GetComponent<PlayerStat>();
     }
 
     // Update is called once per frame
