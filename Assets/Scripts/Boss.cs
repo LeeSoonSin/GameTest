@@ -263,19 +263,20 @@ public class Boss : Enemy
     public override void Die()
     {
         isDead = true;
-        GameManager.instance.MonsterCount[GameManager.instance.buildIndex - 1] -= 1;
-        StartCoroutine(DeadScene());
+        GameManager.instance.MonsterCount[GameManager.instance.buildIndex - 2] -= 1;
+        SceneManager.LoadScene("EndStory");
+        //StartCoroutine(DeadScene());
     }
 
-    IEnumerator DeadScene()
-    {
-        Color color = gameObject.GetComponent<Color>();
-        while(color.a > 0f)
-        {
-            color.a -= Time.deltaTime;
-            yield return null;
-        }
-        SceneManager.LoadScene("EndStory");
-        Destroy(gameObject);
-    }
+    //IEnumerator DeadScene()
+    //{
+    //    //Color color = gameObject.GetComponent<Color>();
+    //    //while(color.a > 0f)
+    //    //{
+    //    //    color.a -= Time.deltaTime;
+    //    //    yield return null;
+    //    //}
+    //    SceneManager.LoadScene("EndStory");
+    //    Destroy(gameObject);
+    //}
 }
