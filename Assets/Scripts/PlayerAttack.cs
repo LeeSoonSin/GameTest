@@ -25,7 +25,11 @@ public class PlayerAttack : MonoBehaviour
     {
         ArrowSkill();
         FoxfireSkill();
-        UIManager.instance.SetSkill(curtime, cooltime);
+        if(!GameManager.instance.BossDead)
+        {
+            UIManager.instance.SetSkill(curtime, cooltime);
+        }
+        
     }
     void ArrowSkill()
     {

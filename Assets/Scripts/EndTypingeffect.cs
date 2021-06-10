@@ -40,6 +40,7 @@ public class EndTypingeffect : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(0);
     }
     IEnumerator _image()
     {

@@ -82,8 +82,16 @@ public class PlayerControl : MonoBehaviour
         BuffSkill();
         HealingSkill();
         Trans();
-        UIManager.instance.SetRage(playerStat.currentRage, playerStat.Rage);
-        UIManager.instance.SetBuff();
+        if(!GameManager.instance.BossDead)
+        {
+            UIManager.instance.SetRage(playerStat.currentRage, playerStat.Rage);
+            UIManager.instance.SetBuff();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         if (GameManager.instance.SelectedCard[5])
         {
             playerStat.HP = 110;
@@ -193,7 +201,10 @@ public class PlayerControl : MonoBehaviour
         {
             curTime += Time.deltaTime;
         }
-        UIManager.instance.SetAttackDelay(curTime, coolTime);
+        if(!GameManager.instance.BossDead)
+        {
+            UIManager.instance.SetAttackDelay(curTime, coolTime);
+        }
     }  //근접공격 (공격하면서 바라보는 방향으로 이동하는거 아직 구현 못함.)
 
     void AttackRange()  

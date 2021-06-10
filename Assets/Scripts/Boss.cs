@@ -264,6 +264,7 @@ public class Boss : Enemy
     {
         isDead = true;
         GameManager.instance.MonsterCount[GameManager.instance.buildIndex - 2] -= 1;
+        GameManager.instance.BossDead = isDead;
         SceneManager.LoadScene("EndStory");
         //StartCoroutine(DeadScene());
     }

@@ -56,18 +56,26 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if(IsSelect)
-        {
-            StatusUI.SetActive(false);
-        }
-        else
-        {
-            StatusUI.SetActive(true);
-        }
+        
         
         if(GameManager.instance.Dead)
         {
             Panel.SetActive(true);
+        }
+        if (GameManager.instance.BossDead && SceneManager.GetActiveScene().buildIndex == 8)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            if (IsSelect)
+            {
+                StatusUI.SetActive(false);
+            }
+            else
+            {
+                StatusUI.SetActive(true);
+            }
         }
     }
 
@@ -242,6 +250,5 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
         Destroy(gameObject);
-        
     }
 }

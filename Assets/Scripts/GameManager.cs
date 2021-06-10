@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     public bool[] SelectedCard = new bool[9]; //고른 카드
     public bool Dead = false;
+    public bool BossDead = false;
+
     private void Awake()
     {
         _instance = this;
@@ -47,6 +49,10 @@ public class GameManager : MonoBehaviour
             //potal.gameObject.SetActive(false);
         }
         if(Dead)
+        {
+            Destroy(gameObject);
+        }
+        if(BossDead && SceneManager.GetActiveScene().buildIndex == 8)
         {
             Destroy(gameObject);
         }

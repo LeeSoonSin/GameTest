@@ -1,8 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-//using System.Security.Cryptography;
-using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class FoxBullet : MonoBehaviour
