@@ -161,7 +161,8 @@ public class Mob : Enemy
     public override void Die()
     {
         GameManager.instance.MonsterCount[GameManager.instance.buildIndex - GameManager.instance.RoundNumber] -= 1;
-        //playerStat.currentRage += 10;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerStat>().currentRage += 5;
         Destroy(gameObject);
     }
 }

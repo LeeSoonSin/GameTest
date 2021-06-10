@@ -32,7 +32,6 @@ public class PlayerStat : MonoBehaviour
         if(!playerControl.IsDamaged)
         {
             playerControl.IsDamaged = true;
-            playerControl.notActive = false;
             playerControl.maxSpeed = 5f;
             if(damage < GuardRange)
             {

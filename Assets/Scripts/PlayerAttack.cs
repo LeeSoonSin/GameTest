@@ -34,6 +34,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (curtime >= cooltime)
             {
+                Debug.Log("1111");
                 anim.SetBool("isArrow", true);
                 Invoke("InstaniBullet", 1f);
                 curtime = 0;

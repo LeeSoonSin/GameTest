@@ -137,7 +137,7 @@ public class PlayerControl : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         playerRigidbody.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);
 
-        if (!IsAttack || !IsGuard)
+        if (!IsAttack)
         {
             mem_horizontal = horizontal;
 
@@ -317,6 +317,8 @@ public class PlayerControl : MonoBehaviour
                     anim.SetBool("isGuard", false);
                     redHalfGuard.SetActive(false);
                     blueHalfGuard.SetActive(false);
+                    redGuard.SetActive(false);
+                    blueGuard.SetActive(false);
                 }
                 GuardCurTime -= Time.deltaTime;
             }
@@ -329,6 +331,8 @@ public class PlayerControl : MonoBehaviour
         IsGuard = false;
         redHalfGuard.SetActive(false);
         blueHalfGuard.SetActive(false);
+        redGuard.SetActive(false);
+        blueGuard.SetActive(false);
         anim.SetBool("isGuard", false);
     }
 

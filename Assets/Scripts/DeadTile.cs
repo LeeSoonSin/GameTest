@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class DeadTile : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.gameObject.tag == "Player")//tag로 줄일수있다.
-        //{
-            
-        //}
-        //else if (collision.gameObject.tag == "Shooter" || collision.gameObject.tag == "Infighter")//tag로 줄일수있다.
-        //{
-
-        //}
+        if(collision.gameObject.CompareTag("Shooter"))
+        {
+            collision.gameObject.GetComponent<Shooter>().Die();
+        }
+        if(collision.gameObject.CompareTag("Infighter"))
+        {
+            collision.gameObject.GetComponent<Infighter>().Die();
+        }
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerStat>().Die();
+        }
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
