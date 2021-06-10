@@ -11,6 +11,7 @@ public class Mob : Enemy
     public GameObject DeBuff;
     //PlayerStat playerStat;
 
+    
     [SerializeField]
     protected int moveSpeed; //¼Ó·Â
     [SerializeField]
@@ -39,11 +40,17 @@ public class Mob : Enemy
     protected virtual void Start()
     {
        // playerStat = GetComponent<PlayerStat>();
+
         DeBuff = GetComponent<GameObject>();
         StartCoroutine(ChangeMovement());
         IsTracing = false;
         foxBullet = GetComponent<FoxBullet>();
     }
+    private void Update()
+    {
+        SetHP(currentHP);
+    }
+
     private void FixedUpdate()
     {
         Move();
@@ -58,7 +65,7 @@ public class Mob : Enemy
             spriteRenderer.flipX = false;
         }
     }
-
+    
     protected virtual void SpeedMove()
     {
         //ÇÃ·§Æû Ã¼Å©
@@ -141,11 +148,6 @@ public class Mob : Enemy
             IsTracing = true;
             StopCoroutine(ChangeMovement());
         }
-        if (collision.gameObject.CompareTag("Dead"))
-        {
-            Debug.Log("Á×À½..!");
-            Die();
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -156,7 +158,7 @@ public class Mob : Enemy
             StartCoroutine(ChangeMovement());
         }
     }
-    protected override void Die()
+    public override void Die()
     {
         GameManager.instance.MonsterCount[GameManager.instance.buildIndex - GameManager.instance.RoundNumber] -= 1;
         //playerStat.currentRage += 10;

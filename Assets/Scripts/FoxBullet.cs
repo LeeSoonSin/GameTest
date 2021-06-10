@@ -34,6 +34,7 @@ public class FoxBullet : MonoBehaviour
             {
                 shooter = ray.collider.GetComponent<Shooter>();
                 //파티클이 뿜뿜Instantiate(프리팹, 포지션, 로테이션) as GameObject;
+                shooter.EnemyDamaged(30);
                 Debug.Log("슈터 명중!");
                 GameObject boom = Instantiate(Resources.Load<GameObject>("foxBoom"), transform.position, Quaternion.identity); //프리팹에 있는거 갖고 오는 코드;
                 Destroy(boom, 1);
@@ -44,6 +45,7 @@ public class FoxBullet : MonoBehaviour
             {
                 infighter = ray.collider.GetComponent<Infighter>();
                 //파티클이 뿜뿜Instantiate(프리팹, 포지션, 로테이션) as GameObject;
+                infighter.EnemyDamaged(30);
                 Debug.Log("인파이터 명중!");
                 GameObject boom = Instantiate(Resources.Load<GameObject>("foxBoom"), transform.position, Quaternion.identity); //프리팹에 있는거 갖고 오는 코드;
                 Destroy(boom, 1);

@@ -20,13 +20,15 @@ public class TransferMap : MonoBehaviour
             if (GameManager.instance.MonsterCount[GameManager.instance.buildIndex -2] == 0 && GameManager.instance.isDoor == true)//Input.GetKeyDown(KeyCode.UpArrow)
             {
                 StartCoroutine(UIManager.instance.SelectCard());
+                //collision.gameObject.GetComponent<PlayerStat>().currentHP += 50;
+                //UIManager.instance.SetHP(collision.gameObject.GetComponent<PlayerStat>().currentHP, collision.gameObject.GetComponent<PlayerStat>().HP);
             }
         }
     }
 
     public void NextStage()
     {
-        if (UIManager.instance.IsSelect)
+        if (!UIManager.instance.IsSelect)
         {
             thePlayer.currentMapName = transferMapName;
             SceneManager.LoadScene(transferMapName);

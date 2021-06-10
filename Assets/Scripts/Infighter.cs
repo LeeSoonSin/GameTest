@@ -17,8 +17,8 @@ public class Infighter : Mob
         moveSpeed = 4;
         HP = 50;
         currentHP = HP;
-        Atk = 10;
-        circleCollider2D.radius = 3.5f;
+        Atk = 5;
+        circleCollider2D.radius = 2f;
         moveSpeed = 4;
         Distance = 1f;
         anim = GetComponent<Animator>();

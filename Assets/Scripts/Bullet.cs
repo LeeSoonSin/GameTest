@@ -33,6 +33,8 @@ public class Bullet : MonoBehaviour
             if(ray.collider.CompareTag("Shooter"))
             {
                 //파티클이 뿜뿜Instantiate(프리팹, 포지션, 로테이션) as GameObject;
+                Shooter shooter = ray.collider.GetComponent<Shooter>();
+                shooter.EnemyDamaged(playerStat.FireBall);
                 Debug.Log("슈터 명중!");
                 GameObject boom = Instantiate(Resources.Load<GameObject>("boom"), transform.position, Quaternion.identity); //프리팹에 있는거 갖고 오는 코드;
                 //shooter.EnemyDamaged(playerStat.FireBall);
@@ -41,6 +43,8 @@ public class Bullet : MonoBehaviour
             else if (ray.collider.CompareTag("Infighter"))
             {
                 //파티클이 뿜뿜Instantiate(프리팹, 포지션, 로테이션) as GameObject;
+                Infighter infighter = ray.collider.GetComponent<Infighter>();
+                infighter.EnemyDamaged(playerStat.FireBall);
                 Debug.Log("인파이터 명중!");
                 GameObject boom = Instantiate(Resources.Load<GameObject>("boom"), transform.position, Quaternion.identity); //프리팹에 있는거 갖고 오는 코드;
                 //infighter.EnemyDamaged(playerStat.FireBall);
