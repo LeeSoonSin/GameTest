@@ -220,7 +220,7 @@ public class UIManager : MonoBehaviour
         rect.localRotation = Quaternion.Euler(0, 180, 0);
         while (true)
         {
-            rect.Rotate(new Vector3(0, -50 * Time.deltaTime, 0));
+            rect.Rotate(new Vector3(0, -80f * Time.deltaTime, 0));
             if (rect.localEulerAngles.y < 90f && rect.localEulerAngles.y > 1f)
             {
                 image.sprite = frontSprite;
