@@ -16,8 +16,8 @@ public class Shooter : Mob
         HP = 70;
         currentHP = HP;
         moveSpeed = 3;
-        Atk = 20;
-        circleCollider2D.radius = 5f;
+        Atk = 5;
+        circleCollider2D.radius = 3f;
         Distance = 3f;
         anim = GetComponent<Animator>();
         shooterRigid = gameObject.GetComponent<Rigidbody2D>();

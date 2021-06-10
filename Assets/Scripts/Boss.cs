@@ -38,6 +38,7 @@ public class Boss : Enemy
         {
             Event();
         }
+        SetHP(currentHP);
     }
 
     private void Event()
@@ -258,7 +259,7 @@ public class Boss : Enemy
             
         }
     }
-    protected override void Die()
+    public override void Die()
     {
         isDead = true;
         GameManager.instance.MonsterCount[GameManager.instance.buildIndex - 1] -= 1;

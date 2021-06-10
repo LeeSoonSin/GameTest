@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -36,7 +37,9 @@ public class UIManager : MonoBehaviour
     public Sprite backSprite;
 
     public bool IsSelect = false;
-    [SerializeField]
+    //UI
+    public GameObject StatusUI;
+    public GameObject Panel;
 
 
     private void Awake()
@@ -49,6 +52,23 @@ public class UIManager : MonoBehaviour
         CardUI.SetActive(false);
         DontDestroyOnLoad(gameObject);
         BackGround.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if(IsSelect)
+        {
+            StatusUI.SetActive(false);
+        }
+        else
+        {
+            StatusUI.SetActive(true);
+        }
+        
+        if(GameManager.instance.Dead)
+        {
+            Panel.SetActive(true);
+        }
     }
 
     public void SetHP(int curHP, int HP)
@@ -111,6 +131,7 @@ public class UIManager : MonoBehaviour
     }
     public IEnumerator SelectCard()
     {
+        IsSelect = true;
         CardUI.SetActive(true);
         BackGround.SetActive(true);
         for (int i = 0; i < 9; i++)
@@ -159,7 +180,7 @@ public class UIManager : MonoBehaviour
         {
             Card[i].SetActive(false);
         }
-        IsSelect = true;
+        IsSelect = false;
         BackGround.SetActive(false);
         CardUI.SetActive(false);
         TransferMap transferMap = GameObject.Find("Door").GetComponent<TransferMap>();
@@ -215,5 +236,12 @@ public class UIManager : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    public void goMain()
+    {
+        SceneManager.LoadScene(0);
+        Destroy(gameObject);
+        
     }
 }

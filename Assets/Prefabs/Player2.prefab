@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 100
   currentHP: 100
-  Atk: 60
+  Atk: 10
   FireBall: 30
   Def: 50
   Rage: 100

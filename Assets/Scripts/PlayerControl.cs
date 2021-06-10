@@ -82,7 +82,24 @@ public class PlayerControl : MonoBehaviour
         BuffSkill();
         HealingSkill();
         Trans();
+        UIManager.instance.SetRage(playerStat.currentRage, playerStat.Rage);
         UIManager.instance.SetBuff();
+        if (GameManager.instance.SelectedCard[5])
+        {
+            playerStat.HP = 110;
+        }
+        if(GameManager.instance.SelectedCard[6])
+        {
+            playerStat.Def = 60;
+        }
+        if(GameManager.instance.SelectedCard[7])
+        {
+            jumpPower = 20f;
+        }
+        if(GameManager.instance.SelectedCard[8])
+        {
+            playerStat.Atk = 15;
+        }
     }
     private void OnDrawGizmos()
     {
@@ -166,10 +183,10 @@ public class PlayerControl : MonoBehaviour
                 maxSpeed = 0;
                 curTime = 0;
                 AttackRange();
-                Invoke("AttackRange", 0.5f);
+                Invoke("AttackRange", 0.6f);
 
                 anim.SetTrigger("atk");
-                Invoke("atkWait", 1.1f);
+                Invoke("atkWait", 1.2f);
             }
         }
         else
@@ -193,7 +210,7 @@ public class PlayerControl : MonoBehaviour
                 Invoke("atkWait", 1.1f); // 이동불가 + 행동 활성화
                 break;
             }
-            else if (collider.CompareTag("Infighter"))
+            if (collider.CompareTag("Infighter"))
             {
                 SoundManager.instance.SFXPlay("HitSfx", hitSfx);
                 Infighter infighter = collider.GetComponent<Infighter>();
@@ -201,7 +218,7 @@ public class PlayerControl : MonoBehaviour
                 Invoke("atkWait", 1.1f); // 이동불가 + 행동 활성화
                 break;
             }
-            else if (collider.CompareTag("Boss"))
+            if (collider.CompareTag("Boss"))
             {
                 SoundManager.instance.SFXPlay("HitSfx", hitSfx);
                 Boss boss = collider.GetComponent<Boss>();

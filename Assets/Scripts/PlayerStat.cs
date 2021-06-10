@@ -13,8 +13,6 @@ public class PlayerStat : MonoBehaviour
     public int currentRage; //현재 분노게이지
     public int GuardRange;
 
-    private bool dead = false;
-
     PlayerControl playerControl;
 
     private void Awake()
@@ -26,7 +24,6 @@ public class PlayerStat : MonoBehaviour
     void Start()
     {
         currentHP = HP;
-        Def = 0;
         currentRage = 20;
     }
 
@@ -54,9 +51,10 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
-        dead = true;
         Debug.Log("으앙쥬금");
+        GameManager.instance.Dead = true;
+        Destroy(gameObject);
     }
 }
